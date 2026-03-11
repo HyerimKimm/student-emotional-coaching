@@ -38,16 +38,10 @@ const initialMessages: Message[] = [
 export function AIChat() {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [inputValue, setInputValue] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, number>>({});
+  const [selectedOptions, setSelectedOptions] = useState<
+    Record<string, number>
+  >({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
   const handleSend = () => {
     if (!inputValue.trim()) return;
@@ -79,8 +73,10 @@ export function AIChat() {
       [messageId]: optionIndex,
     }));
 
-    const selectedOption = messages.find((m) => m.id === messageId)?.options?.[optionIndex];
-    
+    const selectedOption = messages.find((m) => m.id === messageId)?.options?.[
+      optionIndex
+    ];
+
     if (selectedOption) {
       const userMessage: Message = {
         id: Date.now().toString(),
@@ -121,15 +117,6 @@ export function AIChat() {
 
   return (
     <div className="chat">
-      <header className="chat__header">
-        <div className="chat__title">
-          <div className="chat__avatar">
-            <Bot />
-          </div>
-          AI 마음 코치
-        </div>
-      </header>
-
       <div className="chat__messages">
         {messages.map((message) => (
           <div key={message.id} className={`message message--${message.type}`}>
