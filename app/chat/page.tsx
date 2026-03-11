@@ -1,6 +1,6 @@
 "use client";
 
-import { AIChat } from "@/pages/screens/AIChat";
+import { AIChat } from "@/screens/AIChat";
 
 export default function ChatPage() {
   return <AIChat />;
