@@ -1,24 +1,24 @@
 // Variables
-$primary: #3182F6;
-$primary-light: #E8F3FF;
-$dark: #191F28;
-$text-secondary: #64748B;
-$background: #F8FAFC;
-$card-bg: #FFFFFF;
-$border: #E2E8F0;
-$success: #10B981;
-$warning: #F59E0B;
-$danger: #EF4444;
+$primary: #3182f6;
+$primary-light: #e8f3ff;
+$dark: #191f28;
+$text-secondary: #64748b;
+$background: #f8fafc;
+$card-bg: #ffffff;
+$border: #e2e8f0;
+$success: #10b981;
+$warning: #f59e0b;
+$danger: #ef4444;
 
 // Mood colors
-$mood-tired: #94A3B8;
-$mood-frustrated: #F97316;
-$mood-anxious: #EAB308;
-$mood-irritated: #EF4444;
-$mood-lonely: #8B5CF6;
-$mood-excited: #10B981;
-$mood-okay: #3B82F6;
-$mood-unsure: #6B7280;
+$mood-tired: #94a3b8;
+$mood-frustrated: #f97316;
+$mood-anxious: #eab308;
+$mood-irritated: #ef4444;
+$mood-lonely: #8b5cf6;
+$mood-excited: #10b981;
+$mood-okay: #3b82f6;
+$mood-unsure: #6b7280;
 
 // Mixins
 @mixin card {
@@ -40,11 +40,17 @@ $mood-unsure: #6B7280;
   justify-content: space-between;
 }
 
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
 // App Container
 .app-container {
   min-height: 100vh;
   background: $background;
-  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 // Navigation
@@ -171,14 +177,14 @@ $mood-unsure: #6B7280;
 // Mood History
 .mood-history {
   @include card;
-  
+
   &__list {
     display: flex;
     gap: 0.75rem;
     overflow-x: auto;
     padding: 0.25rem 0;
     scrollbar-width: none;
-    
+
     &::-webkit-scrollbar {
       display: none;
     }
@@ -198,15 +204,31 @@ $mood-unsure: #6B7280;
     border-radius: 50%;
     border: 2px solid white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-    &--tired { background: $mood-tired; }
-    &--frustrated { background: $mood-frustrated; }
-    &--anxious { background: $mood-anxious; }
-    &--irritated { background: $mood-irritated; }
-    &--lonely { background: $mood-lonely; }
-    &--excited { background: $mood-excited; }
-    &--okay { background: $mood-okay; }
-    &--unsure { background: $mood-unsure; }
+
+    &--tired {
+      background: $mood-tired;
+    }
+    &--frustrated {
+      background: $mood-frustrated;
+    }
+    &--anxious {
+      background: $mood-anxious;
+    }
+    &--irritated {
+      background: $mood-irritated;
+    }
+    &--lonely {
+      background: $mood-lonely;
+    }
+    &--excited {
+      background: $mood-excited;
+    }
+    &--okay {
+      background: $mood-okay;
+    }
+    &--unsure {
+      background: $mood-unsure;
+    }
   }
 
   &__day {
@@ -398,7 +420,7 @@ $mood-unsure: #6B7280;
     border-radius: 50%;
     background: $primary-light;
     @include flex-center;
-    
+
     svg {
       width: 1.25rem;
       height: 1.25rem;
@@ -578,7 +600,7 @@ $mood-unsure: #6B7280;
   position: sticky;
   bottom: 0;
   background: $background;
-  
+
   .btn-primary {
     width: 100%;
   }

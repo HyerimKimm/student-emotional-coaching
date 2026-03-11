@@ -7,9 +7,5 @@ import "@/styles/app.scss";
 type Screen = "home" | "check" | "chat";
 
 export default function DashboardPage() {
-  return (
-    <main>
-      <HomeDashboard />
-    </main>
-  );
+  return <HomeDashboard />;
 }

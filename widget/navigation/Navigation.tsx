@@ -7,6 +7,7 @@ type Screen = "home" | "check" | "chat";
 
 export default function Navigation() {
   const router = useRouter();
+  const pathname = usePathname();
 
   const [currentScreen, setCurrentScreen] = useState<Screen>("home");
 
@@ -25,6 +26,10 @@ export default function Navigation() {
 
     router.push("/");
   }
+
+  useEffect(() => {
+    setCurrentScreen((pathname.split("/")[1] as Screen) || "home");
+  }, [pathname]);
 
   return (
     <nav className="nav-tabs" role="tablist">
