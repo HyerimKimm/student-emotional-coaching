@@ -1,6 +1,6 @@
 "use client";
 
-import { EmotionCheck } from "@/pages/screens/EmotionCheck";
+import { EmotionCheck } from "@/screens/EmotionCheck";
 
 export default function CheckPage() {
   return <EmotionCheck />;
