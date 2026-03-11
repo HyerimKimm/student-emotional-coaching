@@ -3,10 +3,6 @@
 import { useState } from "react";
 import { MessageCircle } from "lucide-react";
 
-interface EmotionCheckProps {
-  onStartChat: () => void;
-}
-
 const emotions = [
   { id: "tired", label: "지침" },
   { id: "frustrated", label: "답답함" },
@@ -24,7 +20,7 @@ const energyLevels = [
   { id: "high", label: "높음" },
 ];
 
-export function EmotionCheck({ onStartChat }: EmotionCheckProps) {
+export function EmotionCheck() {
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
   const [energyLevel, setEnergyLevel] = useState<string>("");
   const [thoughts, setThoughts] = useState("");
@@ -33,7 +29,7 @@ export function EmotionCheck({ onStartChat }: EmotionCheckProps) {
     setSelectedEmotions((prev) =>
       prev.includes(emotionId)
         ? prev.filter((id) => id !== emotionId)
-        : [...prev, emotionId]
+        : [...prev, emotionId],
     );
   };
 
@@ -94,7 +90,7 @@ export function EmotionCheck({ onStartChat }: EmotionCheckProps) {
       </div>
 
       <div className="submit-section">
-        <button className="btn-primary" onClick={onStartChat}>
+        <button className="btn-primary" onClick={() => {}}>
           <MessageCircle size={20} />
           AI와 대화 시작
         </button>

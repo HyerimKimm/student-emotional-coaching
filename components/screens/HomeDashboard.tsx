@@ -1,11 +1,7 @@
 "use client";
 
 import { Sparkles, ArrowRight, MessageCircle } from "lucide-react";
-
-interface HomeDashboardProps {
-  onStartCheck: () => void;
-  onStartChat: () => void;
-}
+import { useRouter } from "next/navigation";
 
 const moodHistory = [
   { day: "월", mood: "tired" },
@@ -17,7 +13,9 @@ const moodHistory = [
   { day: "일", mood: "okay" },
 ];
 
-export function HomeDashboard({ onStartCheck, onStartChat }: HomeDashboardProps) {
+export function HomeDashboard() {
+  const router = useRouter();
+
   return (
     <div className="home">
       <header className="home__header">
@@ -26,7 +24,12 @@ export function HomeDashboard({ onStartCheck, onStartChat }: HomeDashboardProps)
       </header>
 
       <div className="home__main-action">
-        <button className="btn-primary" onClick={onStartCheck}>
+        <button
+          className="btn-primary"
+          onClick={() => {
+            router.push("/check");
+          }}
+        >
           <Sparkles size={20} />
           오늘 마음 체크하기
         </button>
@@ -38,7 +41,9 @@ export function HomeDashboard({ onStartCheck, onStartChat }: HomeDashboardProps)
           <div className="mood-history__list">
             {moodHistory.map((item, index) => (
               <div key={index} className="mood-history__item">
-                <div className={`mood-history__circle mood-history__circle--${item.mood}`} />
+                <div
+                  className={`mood-history__circle mood-history__circle--${item.mood}`}
+                />
                 <span className="mood-history__day">{item.day}</span>
               </div>
             ))}
@@ -60,7 +65,12 @@ export function HomeDashboard({ onStartCheck, onStartChat }: HomeDashboardProps)
             <br />
             작은 시작을 해볼까요?
           </p>
-          <button className="btn-secondary" onClick={onStartChat}>
+          <button
+            className="btn-secondary"
+            onClick={() => {
+              router.push("/chat");
+            }}
+          >
             대화 시작하기
             <ArrowRight size={18} />
           </button>
