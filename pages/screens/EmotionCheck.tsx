@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MessageCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const emotions = [
   { id: "tired", label: "지침" },
@@ -21,6 +22,8 @@ const energyLevels = [
 ];
 
 export function EmotionCheck() {
+  const router = useRouter();
+
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
   const [energyLevel, setEnergyLevel] = useState<string>("");
   const [thoughts, setThoughts] = useState("");
@@ -90,7 +93,12 @@ export function EmotionCheck() {
       </div>
 
       <div className="submit-section">
-        <button className="btn-primary" onClick={() => {}}>
+        <button
+          className="btn-primary"
+          onClick={() => {
+            router.push("/chat");
+          }}
+        >
           <MessageCircle size={20} />
           AI와 대화 시작
         </button>

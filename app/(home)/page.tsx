@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { HomeDashboard } from "@/components/screens/HomeDashboard";
-import "@/styles/app.scss";
+import { HomeDashboard } from "@/pages/screens/HomeDashboard";
+import "@/shared/styles/app.scss";
 
 type Screen = "home" | "check" | "chat";
 
