@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { Suspense } from "react";
 import "./globals.css";
 import Navigation from "@/widget/navigation/Navigation";
+import LoginFromQuery from "./LoginFromQuery";
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ["latin"],
@@ -49,8 +51,18 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${notoSansKR.variable} font-sans antialiased`}>
         <div className="app-container">
-          <Navigation />
-          {children}
+          <Suspense
+            fallback={
+              <div className="flex min-h-[60vh] items-center justify-center">
+                <p className="text-neutral-500">로그인 중...</p>
+              </div>
+            }
+          >
+            <LoginFromQuery>
+              <Navigation />
+              {children}
+            </LoginFromQuery>
+          </Suspense>
         </div>
         <Analytics />
       </body>
