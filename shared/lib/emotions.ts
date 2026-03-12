@@ -68,18 +68,18 @@ export const EMOTIONS: EmotionType[] = [
     color: '#DC2626',
   },
   {
+    key: 'happy',
+    label: '행복함',
+    valence: 'positive',
+    arousal: 'high',
+    color: '#FDE047',
+  },
+  {
     key: 'excited',
     label: '기대됨',
     valence: 'positive',
     arousal: 'high',
     color: '#FBBF24',
-  },
-  {
-    key: 'happy',
-    label: '기쁨',
-    valence: 'positive',
-    arousal: 'high',
-    color: '#FDE047',
   },
   {
     key: 'calm',
