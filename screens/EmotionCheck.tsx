@@ -1,50 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { EMOTIONS, ENERGY_LEVELS, type ValanceType, type EmotionType } from '@/shared/lib/emotions';
 
-const positiveEmotions = [
-  { id: 'happy', label: '행복함' },
-  { id: 'excited', label: '기대됨' },
-  { id: 'peaceful', label: '평온함' },
-  { id: 'grateful', label: '감사함' },
-  { id: 'confident', label: '자신감' },
-  { id: 'proud', label: '뿌듯함' },
-  { id: 'hopeful', label: '희망적' },
-  { id: 'okay', label: '괜찮음' },
-];
-
-const negativeEmotions = [
-  { id: 'tired', label: '지침' },
-  { id: 'frustrated', label: '답답함' },
-  { id: 'anxious', label: '불안' },
-  { id: 'irritated', label: '짜증' },
-  { id: 'lonely', label: '외로움' },
-  { id: 'sad', label: '슬픔' },
-  { id: 'angry', label: '화남' },
-  { id: 'unsure', label: '잘 모르겠음' },
-];
-
-const energyLevels = [
-  { id: 'low', label: '낮음' },
-  { id: 'medium', label: '보통' },
-  { id: 'high', label: '높음' },
-];
+const VALENCE_LABELS: Record<ValanceType, string> = {
+  positive: '긍정',
+  negative: '부정',
+  neutral: '중립',
+};
 
 export function EmotionCheck() {
   const router = useRouter();
 
-  const [emotionCategory, setEmotionCategory] = useState<'positive' | 'negative'>('negative');
+  const [valence, setValence] = useState<ValanceType>('positive');
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
   const [energyLevel, setEnergyLevel] = useState<string>('');
   const [thoughts, setThoughts] = useState('');
 
-  const currentEmotions = emotionCategory === 'positive' ? positiveEmotions : negativeEmotions;
+  const currentEmotions = useMemo<EmotionType[]>(() => {
+    if (valence === 'positive') {
+      return EMOTIONS.filter((e) => e.valence === 'positive');
+    }
+    return EMOTIONS.filter((e) => e.valence === 'negative' || e.valence === 'neutral');
+  }, [valence]);
 
-  const toggleEmotion = (emotionId: string) => {
+  const toggleEmotion = (emotionKey: string) => {
     setSelectedEmotions((prev) =>
-      prev.includes(emotionId) ? prev.filter((id) => id !== emotionId) : [...prev, emotionId]
+      prev.includes(emotionKey) ? prev.filter((key) => key !== emotionKey) : [...prev, emotionKey]
     );
   };
 
@@ -55,27 +39,27 @@ export function EmotionCheck() {
           <h2 className="emotion-check__title">오늘 마음은 어떤 느낌에 가까워요?</h2>
           <div className="emotion-toggle">
             <button
-              className={`emotion-toggle__btn ${emotionCategory === 'positive' ? 'emotion-toggle__btn--active' : ''}`}
-              onClick={() => setEmotionCategory('positive')}
+              className={`emotion-toggle__btn ${valence === 'positive' ? 'emotion-toggle__btn--active' : ''}`}
+              onClick={() => setValence('positive')}
             >
-              긍정
+              {VALENCE_LABELS.positive}
             </button>
             <button
-              className={`emotion-toggle__btn ${emotionCategory === 'negative' ? 'emotion-toggle__btn--active' : ''}`}
-              onClick={() => setEmotionCategory('negative')}
+              className={`emotion-toggle__btn ${valence === 'negative' ? 'emotion-toggle__btn--active' : ''}`}
+              onClick={() => setValence('negative')}
             >
-              부정
+              {VALENCE_LABELS.negative}
             </button>
           </div>
         </div>
         <div className="emotion-chips">
           {currentEmotions.map((emotion) => (
             <button
-              key={emotion.id}
+              key={emotion.key}
               className={`emotion-chips__item ${
-                selectedEmotions.includes(emotion.id) ? 'emotion-chips__item--selected' : ''
+                selectedEmotions.includes(emotion.key) ? 'emotion-chips__item--selected' : ''
               }`}
-              onClick={() => toggleEmotion(emotion.id)}
+              onClick={() => toggleEmotion(emotion.key)}
             >
               {emotion.label}
             </button>
@@ -86,7 +70,7 @@ export function EmotionCheck() {
       <div className="emotion-check__card">
         <h2 className="emotion-check__title">에너지 수준</h2>
         <div className="energy-level">
-          {energyLevels.map((level) => (
+          {ENERGY_LEVELS.map((level) => (
             <div key={level.id} className="energy-level__item">
               <input
                 type="radio"
