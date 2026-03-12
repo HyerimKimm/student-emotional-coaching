@@ -2,26 +2,33 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import ErrorPage from '@/screens/ErrorPage';
 
 type Status = 'idle' | 'loading' | 'done' | 'fail';
 
 export default function LoginFromQuery({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
   const router = useRouter();
+
   const [status, setStatus] = useState<Status>('loading');
 
-  const Id = searchParams.get('Id');
-  const pw = searchParams.get('pw');
-  const hasCredentials = Boolean(Id && pw);
+  const id = searchParams.get('id');
+  const password = searchParams.get('pw');
+
+  const hasCredentials = Boolean(id && password);
 
   useEffect(() => {
-    if (!hasCredentials) return;
+    if (!hasCredentials) {
+      /* 쿼리파라미터에 id, pw 값이 없는 경우 */
+      setStatus('fail');
+      return;
+    }
     const ctrl = new AbortController();
 
     fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: Id, password: pw }),
+      body: JSON.stringify({ email: id, password: password }),
       signal: ctrl.signal,
     })
       .then((res) => {
@@ -38,11 +45,9 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
         router.replace('/error');
       });
     return () => ctrl.abort();
-  }, [Id, pw, hasCredentials, router]);
+  }, [id, password, hasCredentials, router]);
 
-  const effectiveStatus = !hasCredentials ? 'done' : status;
-
-  if (effectiveStatus === 'loading') {
+  if (status === 'loading') {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <p className="text-neutral-500">로그인 중...</p>
@@ -50,8 +55,8 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
     );
   }
 
-  if (effectiveStatus === 'fail') {
-    return null;
+  if (status === 'fail') {
+    return <ErrorPage />;
   }
 
   return <>{children}</>;
