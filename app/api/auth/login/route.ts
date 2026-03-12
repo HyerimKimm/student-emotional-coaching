@@ -33,9 +33,11 @@ export async function POST(request: Request) {
 
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("id, name, role, createdAt")
+      .select("id, name, role, created_at")
       .eq("id", userId)
       .single();
+
+      console.log(profile);
 
     if (profileError) {
       return NextResponse.json(
