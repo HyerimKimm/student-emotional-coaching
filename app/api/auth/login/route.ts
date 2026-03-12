@@ -58,7 +58,7 @@ export async function POST(request: Request) {
         id: profile.id,
         name: profile.name,
         role: profile.role,
-        createdAt: profile.createdAt,
+        createdAt: profile.created_at,
       },
     });
   } catch (e) {
