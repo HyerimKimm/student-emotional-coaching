@@ -10,6 +10,11 @@ export type EmotionType = {
     color: string;
 }
 
+export type EnergyLevelType = {
+    id: string;
+    label: string;
+}
+
 export const VALENCE : ValanceType[] = [
     "positive",
     "negative",
@@ -109,3 +114,9 @@ export const EMOTIONS : EmotionType[] = [
       color: "#9CA3AF"
     }
   ]
+
+  export const ENERGY_LEVELS : EnergyLevelType[] =  [
+    { id: "low", label: "낮음" },
+    { id: "medium", label: "보통" },
+    { id: "high", label: "높음" },
+  ];
