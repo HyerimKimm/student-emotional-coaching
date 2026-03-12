@@ -72,40 +72,40 @@ export const EMOTIONS : EmotionType[] = [
       color: "#DC2626"
     },
     {
-        key: "excited",
-        label: "기대됨",
-        valence: "positive",
-        arousal: "high",
-        color: "#FBBF24"
-      },
-      {
-        key: "happy",
-        label: "기쁨",
-        valence: "positive",
-        arousal: "high",
-        color: "#FDE047"
-      },
-      {
-        key: "calm",
-        label: "편안함",
-        valence: "positive",
-        arousal: "low",
-        color: "#34D399"
-      },
-      {
-        key: "satisfied",
-        label: "만족",
-        valence: "positive",
-        arousal: "medium",
-        color: "#22C55E"
-      },
-      {
-        key: "proud",
-        label: "뿌듯함",
-        valence: "positive",
-        arousal: "medium",
-        color: "#10B981"
-      },
+      key: "excited",
+      label: "기대됨",
+      valence: "positive",
+      arousal: "high",
+      color: "#FBBF24"
+    },
+    {
+      key: "happy",
+      label: "기쁨",
+      valence: "positive",
+      arousal: "high",
+      color: "#FDE047"
+    },
+    {
+      key: "calm",
+      label: "편안함",
+      valence: "positive",
+      arousal: "low",
+      color: "#34D399"
+    },
+    {
+      key: "satisfied",
+      label: "만족",
+      valence: "positive",
+      arousal: "medium",
+      color: "#22C55E"
+    },
+    {
+      key: "proud",
+      label: "뿌듯함",
+      valence: "positive",
+      arousal: "medium",
+      color: "#10B981"
+    },
     {
       key: "unknown",
       label: "잘 모르겠음",
