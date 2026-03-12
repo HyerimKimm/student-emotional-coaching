@@ -3,4 +3,13 @@ import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 
 /** @type {import('eslint').Linter.Config[]} */
-export default [...nextPlugin, eslintPluginPrettier, eslintConfigPrettier];
+export default [
+  ...nextPlugin,
+  eslintPluginPrettier,
+  eslintConfigPrettier,
+  {
+    rules: {
+      'linebreak-style': 'off',
+    },
+  },
+];
