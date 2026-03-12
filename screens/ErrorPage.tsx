@@ -9,11 +9,9 @@ export default function ErrorPage() {
         <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-destructive/10">
           <AlertCircle className="h-10 w-10 text-destructive" />
         </div>
-        
-        <h1 className="mb-3 text-2xl font-bold text-foreground">
-          접근할 수 없는 페이지예요
-        </h1>
-        
+
+        <h1 className="mb-3 text-2xl font-bold text-foreground">접근할 수 없는 페이지예요</h1>
+
         <p className="max-w-sm text-base leading-relaxed text-muted-foreground">
           로그인 정보가 올바르지 않거나,
           <br />

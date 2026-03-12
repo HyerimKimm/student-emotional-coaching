@@ -20,16 +20,14 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
   useEffect(() => {
     if (!hasCredentials) {
       /* 쿼리파라미터에 id, pw 값이 없는 경우 */
-      setStatus('fail');
+      setStatus('done');
       return;
     }
-    const ctrl = new AbortController();
 
     fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: id, password: password }),
-      signal: ctrl.signal,
     })
       .then((res) => {
         if (res.ok) {
@@ -44,7 +42,6 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
         setStatus('fail');
         router.replace('/error');
       });
-    return () => ctrl.abort();
   }, [id, password, hasCredentials, router]);
 
   if (status === 'loading') {
