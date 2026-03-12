@@ -1,42 +1,42 @@
-import type { Metadata, Viewport } from "next";
-import { Noto_Sans_KR } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
-import { Suspense } from "react";
-import "./globals.css";
-import Navigation from "@/widget/navigation/Navigation";
-import LoginFromQuery from "./LoginFromQuery";
+import type { Metadata, Viewport } from 'next';
+import { Noto_Sans_KR } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { Suspense } from 'react';
+import './globals.css';
+import Navigation from '@/widget/navigation/Navigation';
+import LoginFromQuery from './LoginFromQuery';
 
 const notoSansKR = Noto_Sans_KR({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-noto-sans-kr",
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-noto-sans-kr',
 });
 
 export const metadata: Metadata = {
-  title: "마음 코치 - 학생 감정 케어 앱",
-  description: "학생들의 감정과 학업 스트레스를 AI 챗봇과 함께 케어하는 앱",
+  title: '마음 코치 - 학생 감정 케어 앱',
+  description: '학생들의 감정과 학업 스트레스를 AI 챗봇과 함께 케어하는 앱',
   icons: {
     icon: [
       {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
+        url: '/icon-light-32x32.png',
+        media: '(prefers-color-scheme: light)',
       },
       {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
+        url: '/icon-dark-32x32.png',
+        media: '(prefers-color-scheme: dark)',
       },
       {
-        url: "/icon.svg",
-        type: "image/svg+xml",
+        url: '/icon.svg',
+        type: 'image/svg+xml',
       },
     ],
-    apple: "/apple-icon.png",
+    apple: '/apple-icon.png',
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#3182F6",
-  width: "device-width",
+  themeColor: '#3182F6',
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,

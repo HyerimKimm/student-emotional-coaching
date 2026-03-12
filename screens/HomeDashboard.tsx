@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { Sparkles, ArrowRight, MessageCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const moodHistory = [
-  { day: "월", mood: "tired" },
-  { day: "화", mood: "frustrated" },
-  { day: "수", mood: "anxious" },
-  { day: "목", mood: "okay" },
-  { day: "금", mood: "excited" },
-  { day: "토", mood: "lonely" },
-  { day: "일", mood: "okay" },
+  { day: '월', mood: 'tired' },
+  { day: '화', mood: 'frustrated' },
+  { day: '수', mood: 'anxious' },
+  { day: '목', mood: 'okay' },
+  { day: '금', mood: 'excited' },
+  { day: '토', mood: 'lonely' },
+  { day: '일', mood: 'okay' },
 ];
 
 export function HomeDashboard() {
@@ -19,7 +19,7 @@ export function HomeDashboard() {
   return (
     <div className="home">
       <header className="home__header">
-        <h1 className="home__greeting">{"안녕 혜림 👋"}</h1>
+        <h1 className="home__greeting">{'안녕 혜림 👋'}</h1>
         <p className="home__question">오늘 마음은 어때?</p>
       </header>
 
@@ -27,7 +27,7 @@ export function HomeDashboard() {
         <button
           className="btn-primary"
           onClick={() => {
-            router.push("/check");
+            router.push('/check');
           }}
         >
           <Sparkles size={20} />
@@ -41,9 +41,7 @@ export function HomeDashboard() {
           <div className="mood-history__list">
             {moodHistory.map((item, index) => (
               <div key={index} className="mood-history__item">
-                <div
-                  className={`mood-history__circle mood-history__circle--${item.mood}`}
-                />
+                <div className={`mood-history__circle mood-history__circle--${item.mood}`} />
                 <span className="mood-history__day">{item.day}</span>
               </div>
             ))}
@@ -68,7 +66,7 @@ export function HomeDashboard() {
           <button
             className="btn-secondary"
             onClick={() => {
-              router.push("/chat");
+              router.push('/chat');
             }}
           >
             대화 시작하기
