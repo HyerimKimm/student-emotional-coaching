@@ -413,7 +413,7 @@ $mood-unsure: #6b7280;
     font-size: 0.9375rem;
     line-height: 1.6;
     color: $dark;
-    resize: vertical;
+    resize: none;
     transition: border-color 0.2s ease;
 
     &::placeholder {
