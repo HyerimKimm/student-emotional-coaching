@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuthStore } from '@/shared/stores/useAuthStore';
 import { Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -16,10 +17,13 @@ const moodHistory = [
 export function HomeDashboard() {
   const router = useRouter();
 
+  const user = useAuthStore((state) => state.user);
+  const profile = useAuthStore((state) => state.profile);
+
   return (
     <div className="home">
       <header className="home__header">
-        <h1 className="home__greeting">{'안녕 혜림 👋'}</h1>
+        <h1 className="home__greeting">{`안녕 ${profile?.name} 👋`}</h1>
         <p className="home__question">오늘 마음은 어때?</p>
       </header>
 
