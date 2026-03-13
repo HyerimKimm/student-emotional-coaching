@@ -30,8 +30,6 @@ export async function POST(request: Request) {
       .eq('id', userId)
       .single();
 
-    console.log(profile);
-
     if (profileError) {
       return NextResponse.json(
         {
