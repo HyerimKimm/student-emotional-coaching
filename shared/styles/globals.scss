@@ -1,0 +1,35 @@
+@use '_reset' as *;
+@use '_mixins' as *;
+@use '_variables' as *;
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  -webkit-font-smoothing: antialiased; // 글자 가장자리를 부드럽게 만듦
+  -moz-osx-font-smoothing: grayscale; // macOS에서 서브픽셀 대신 그레이스케일 안티앨리어싱을 쓰도록 함
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit; // 부모 요소의 글자 색을 그대로 따르게 함
+  text-decoration: none; // 링크 밑줄 제거
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  font-size: inherit;
+}
