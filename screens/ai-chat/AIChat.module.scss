@@ -38,13 +38,13 @@
   font-size: 0.9375rem;
   line-height: 1.6;
 
-  .message.user & {
+  &.user {
     background: $color-brand;
     color: white;
     border-bottom-right-radius: 0.25rem;
   }
 
-  .message.ai & {
+  &.ai {
     background: $color-white;
     color: $color-gray-900;
     border-bottom-left-radius: 0.25rem;

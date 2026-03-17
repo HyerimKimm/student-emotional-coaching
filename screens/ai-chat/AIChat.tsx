@@ -59,7 +59,9 @@ export function AIChat() {
       <div className={styles.messages}>
         {messages.map((message, index) => (
           <div key={index} className={`${styles.message} ${styles[message.role]}`}>
-            <div className={styles.bubble}>
+            <div
+              className={`${styles.bubble} ${message.role === 'user' ? styles.user : styles.ai}`}
+            >
               {message.content.split('\n').map((line, i) => (
                 <span key={i}>
                   {line}
