@@ -2,7 +2,7 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import ErrorPage from '@/screens/ErrorPage';
+import ErrorPage from '@/screens/error-page/ErrorPage';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
 
 import styles from './LoginFromQuery.module.scss';
