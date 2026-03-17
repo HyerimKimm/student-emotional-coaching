@@ -92,7 +92,7 @@ $mood-unsure: #6b7280;
 .home {
   padding: 1rem;
 
-  &__header {
+  > .header {
     margin-bottom: 1.5rem;
   }
 

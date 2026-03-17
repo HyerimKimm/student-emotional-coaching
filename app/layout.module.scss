@@ -1,0 +1,16 @@
+@use '@/shared/styles/_mixins' as *;
+@use '@/shared/styles/_variables' as *;
+
+// App Container
+.app_container {
+  height: 100vh;
+  overflow: hidden;
+  background: $color-white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.loading {
+  @include flex(column, center, center);
+}

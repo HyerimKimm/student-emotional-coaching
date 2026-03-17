@@ -4,6 +4,8 @@ import { useAuthStore } from '@/shared/stores/useAuthStore';
 import { Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+import styles from './HomeDashboard.module.scss';
+
 const moodHistory = [
   { day: '월', mood: 'tired' },
   { day: '화', mood: 'frustrated' },
@@ -21,15 +23,15 @@ export function HomeDashboard() {
   const profile = useAuthStore((state) => state.profile);
 
   return (
-    <div className="home">
-      <header className="home__header">
-        <h1 className="home__greeting">{`안녕 ${profile?.name} 👋`}</h1>
-        <p className="home__question">오늘 마음은 어때?</p>
+    <div className={styles.home_wrap}>
+      <header className={styles.header}>
+        <h1 className={styles.greeting}>{`안녕 ${profile?.name} 👋`}</h1>
+        <p className={styles.question}>오늘 마음은 어때?</p>
       </header>
 
-      <div className="home__main-action">
+      <div className={styles.main_action}>
         <button
-          className="btn-primary"
+          className={styles.btn_primary}
           onClick={() => {
             router.push('/check');
           }}

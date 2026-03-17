@@ -1,0 +1,35 @@
+@use '@/shared/styles/_mixins' as *;
+@use '@/shared/styles/_variables' as *;
+
+.home_wrap {
+  padding: 1rem;
+
+  > .header {
+    margin-bottom: 1.5rem;
+
+    > .greeting {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: $color-gray-900;
+      margin-bottom: 0.25rem;
+    }
+
+    > .question {
+      font-size: 1.25rem;
+      color: $color-gray-500;
+    }
+  }
+
+  > .main_action {
+    background-color: $color-white;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding: 2rem 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    > .btn_primary {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+}

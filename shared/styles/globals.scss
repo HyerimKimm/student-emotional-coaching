@@ -1,6 +1,6 @@
-@use '_reset' as *;
-@use '_mixins' as *;
-@use '_variables' as *;
+@use 'reset' as *;
+@use '@/shared/styles/_mixins' as *;
+@use '@/shared/styles/_variables' as *;
 
 html,
 body {
@@ -19,6 +19,7 @@ body {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: $default-font-family;
 }
 
 a {
