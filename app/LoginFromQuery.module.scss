@@ -1,0 +1,11 @@
+@use '@/shared/styles/_mixins' as *;
+@use '@/shared/styles/_variables' as *;
+
+.loading_wrap {
+  min-height: 60vh;
+  @include flex(column, center, center);
+}
+
+.loading_text {
+  color: $color-gray-500;
+}

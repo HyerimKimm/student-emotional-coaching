@@ -1,3 +1,5 @@
+@use '@/shared/styles/_variables' as *;
+
 @mixin flex($direction: row, $justify: center, $align: center) {
   display: flex;
   flex-direction: $direction;
@@ -9,4 +11,11 @@
   font-size: $size;
   font-weight: $weight;
   color: $color;
+}
+
+@mixin card {
+  background: $color-white;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 1.25rem;
 }

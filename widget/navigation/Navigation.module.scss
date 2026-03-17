@@ -1,7 +1,7 @@
 @use '@/shared/styles/_mixins' as *;
 @use '@/shared/styles/_variables' as *;
 
-.nav-tabs {
+.nav_tabs {
   display: flex;
   background: $color-white;
   border-radius: 0.75rem;

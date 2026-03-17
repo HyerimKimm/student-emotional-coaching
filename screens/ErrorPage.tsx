@@ -2,17 +2,19 @@
 
 import { AlertCircle } from 'lucide-react';
 
+import styles from './ErrorPage.module.scss';
+
 export default function ErrorPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background px-6">
-      <div className="flex flex-col items-center text-center">
-        <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-destructive/10">
-          <AlertCircle className="h-10 w-10 text-destructive" />
+    <div className={styles.wrap}>
+      <div className={styles.inner}>
+        <div className={styles.icon_wrap}>
+          <AlertCircle className={styles.icon} size={40} />
         </div>
 
-        <h1 className="mb-3 text-2xl font-bold text-foreground">접근할 수 없는 페이지예요</h1>
+        <h1 className={styles.title}>접근할 수 없는 페이지예요</h1>
 
-        <p className="max-w-sm text-base leading-relaxed text-muted-foreground">
+        <p className={styles.text}>
           로그인 정보가 올바르지 않거나,
           <br />
           접근 권한이 없는 페이지입니다.

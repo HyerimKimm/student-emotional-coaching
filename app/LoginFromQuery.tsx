@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import ErrorPage from '@/screens/ErrorPage';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
 
+import styles from './LoginFromQuery.module.scss';
+
 type Status = 'loading' | 'done' | 'fail';
 
 export default function LoginFromQuery({ children }: { children: React.ReactNode }) {
@@ -64,8 +66,8 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
 
   if (status === 'loading') {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <p className="text-neutral-500">로그인 중...</p>
+      <div className={styles.loading_wrap}>
+        <p className={styles.loading_text}>로그인 중...</p>
       </div>
     );
   }

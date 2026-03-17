@@ -41,36 +41,36 @@ export function HomeDashboard() {
         </button>
       </div>
 
-      <section className="section">
-        <h2 className="section__title">최근 감정 기록</h2>
-        <div className="mood-history">
-          <div className="mood-history__list">
+      <section className={styles.section}>
+        <h2 className={styles.section_title}>최근 감정 기록</h2>
+        <div className={styles.mood_history}>
+          <div className={styles.mood_history_list}>
             {moodHistory.map((item, index) => (
-              <div key={index} className="mood-history__item">
-                <div className={`mood-history__circle mood-history__circle--${item.mood}`} />
-                <span className="mood-history__day">{item.day}</span>
+              <div key={index} className={styles.mood_history_item}>
+                <div className={`${styles.mood_history_circle} ${styles[`circle_${item.mood}`]}`} />
+                <span className={styles.mood_history_day}>{item.day}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section">
-        <h2 className="section__title">AI 코치 추천</h2>
-        <div className="ai-card">
-          <div className="ai-card__header">
-            <span className="ai-card__badge">
+      <section className={styles.section}>
+        <h2 className={styles.section_title}>AI 코치 추천</h2>
+        <div className={styles.ai_card}>
+          <div className={styles.ai_card_header}>
+            <span className={styles.ai_card_badge}>
               <MessageCircle size={14} />
               오늘의 추천
             </span>
           </div>
-          <p className="ai-card__text">
+          <p className={styles.ai_card_text}>
             오늘은 에너지가 낮은 날이에요.
             <br />
             작은 시작을 해볼까요?
           </p>
           <button
-            className="btn-secondary"
+            className={styles.btn_secondary}
             onClick={() => {
               router.push('/chat');
             }}

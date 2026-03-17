@@ -5,6 +5,8 @@ import { MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { EMOTIONS, ENERGY_LEVELS, type ValanceType, type EmotionType } from '@/shared/lib/emotions';
 
+import styles from './EmotionCheck.module.scss';
+
 const LINE_HEIGHT_PX = 24; // 0.9375rem * 1.6 (app.scss line-height)
 const PADDING_VERTICAL_PX = 32; // 1rem * 2
 const MIN_LINES = 3;
@@ -58,32 +60,30 @@ export function EmotionCheck() {
   };
 
   return (
-    <div className="emotion-check">
-      <div className="emotion-check__card">
-        <div className="emotion-check__header">
-          <h2 className="emotion-check__title">오늘 마음은 어떤 느낌에 가까워요?</h2>
-          <div className="emotion-toggle">
+    <div className={styles.emotion_check}>
+      <div className={styles.card}>
+        <div className={styles.header}>
+          <h2 className={styles.title}>오늘 마음은 어떤 느낌에 가까워요?</h2>
+          <div className={styles.emotion_toggle}>
             <button
-              className={`emotion-toggle__btn ${valence === 'positive' ? 'emotion-toggle__btn--active' : ''}`}
+              className={`${styles.toggle_btn} ${valence === 'positive' ? styles.active : ''}`}
               onClick={() => setValence('positive')}
             >
               {VALENCE_LABELS.positive}
             </button>
             <button
-              className={`emotion-toggle__btn ${valence === 'negative' ? 'emotion-toggle__btn--active' : ''}`}
+              className={`${styles.toggle_btn} ${valence === 'negative' ? styles.active : ''}`}
               onClick={() => setValence('negative')}
             >
               {VALENCE_LABELS.negative}
             </button>
           </div>
         </div>
-        <div className="emotion-chips">
+        <div className={styles.emotion_chips}>
           {currentEmotions.map((emotion) => (
             <button
               key={emotion.key}
-              className={`emotion-chips__item ${
-                selectedEmotions.includes(emotion.key) ? 'emotion-chips__item--selected' : ''
-              }`}
+              className={`${styles.chip_item} ${selectedEmotions.includes(emotion.key) ? styles.selected : ''}`}
               onClick={() => toggleEmotion(emotion.key)}
             >
               {emotion.label}
@@ -92,11 +92,11 @@ export function EmotionCheck() {
         </div>
       </div>
 
-      <div className="emotion-check__card">
-        <h2 className="emotion-check__title">에너지 수준</h2>
-        <div className="energy-level">
+      <div className={styles.card}>
+        <h2 className={styles.title}>에너지 수준</h2>
+        <div className={styles.energy_level}>
           {ENERGY_LEVELS.map((level) => (
-            <div key={level.id} className="energy-level__item">
+            <div key={level.id} className={styles.energy_item}>
               <input
                 type="radio"
                 id={level.id}
@@ -111,12 +111,12 @@ export function EmotionCheck() {
         </div>
       </div>
 
-      <div className="emotion-check__card">
-        <div className="text-input">
-          <label className="text-input__label">지금 떠오르는 생각이 있다면 편하게 적어주세요</label>
+      <div className={styles.card}>
+        <div>
+          <label className={styles.text_input_label}>지금 떠오르는 생각이 있다면 편하게 적어주세요</label>
           <textarea
             ref={textareaRef}
-            className="text-input__field"
+            className={styles.text_input_field}
             placeholder="요즘 공부가 잘 안돼요. 시험이 다가와서 답답해요."
             value={thoughts}
             onChange={(e) => {
@@ -127,9 +127,9 @@ export function EmotionCheck() {
         </div>
       </div>
 
-      <div className="submit-section">
+      <div className={styles.submit_section}>
         <button
-          className="btn-primary"
+          className={styles.btn_primary}
           onClick={() => {
             router.push('/chat');
           }}

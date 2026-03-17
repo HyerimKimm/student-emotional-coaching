@@ -1,4 +1,4 @@
-@use 'reset' as *;
+@use '_reset' as *;
 @use '@/shared/styles/_mixins' as *;
 @use '@/shared/styles/_variables' as *;
 
@@ -11,6 +11,7 @@ body {
 }
 
 body {
+  font-family: var(--font-noto-sans-kr), $default-font-family;
   -webkit-font-smoothing: antialiased; // 글자 가장자리를 부드럽게 만듦
   -moz-osx-font-smoothing: grayscale; // macOS에서 서브픽셀 대신 그레이스케일 안티앨리어싱을 쓰도록 함
 }

@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Send, Bot } from 'lucide-react';
+import { Send } from 'lucide-react';
+
+import styles from './AIChat.module.scss';
 
 interface Message {
   id: string;
@@ -112,11 +114,11 @@ export function AIChat() {
   };
 
   return (
-    <div className="chat">
-      <div className="chat__messages">
+    <div className={styles.chat}>
+      <div className={styles.messages}>
         {messages.map((message) => (
-          <div key={message.id} className={`message message--${message.type}`}>
-            <div className="message__bubble">
+          <div key={message.id} className={`${styles.message} ${styles[message.type]}`}>
+            <div className={styles.bubble}>
               {message.content.split('\n').map((line, i) => (
                 <span key={i}>
                   {line}
@@ -125,12 +127,12 @@ export function AIChat() {
               ))}
             </div>
             {message.options && (
-              <div className="message__options">
+              <div className={styles.options}>
                 {message.options.map((option, index) => (
                   <button
                     key={index}
-                    className={`message__option ${
-                      selectedOptions[message.id] === index ? 'message__option--selected' : ''
+                    className={`${styles.option} ${
+                      selectedOptions[message.id] === index ? styles.selected : ''
                     }`}
                     onClick={() => handleOptionSelect(message.id, index)}
                     disabled={selectedOptions[message.id] !== undefined}
@@ -145,15 +147,21 @@ export function AIChat() {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="chat__input-area">
-        <div className="quick-actions">
-          <button className="quick-actions__btn">더 이야기하고 싶어요</button>
-          <button className="quick-actions__btn">오늘은 여기까지</button>
-          <button className="quick-actions__btn">도움이 됐어요</button>
+      <div className={styles.input_area}>
+        <div className={styles.quick_actions}>
+          <button type="button" className={styles.quick_btn}>
+            더 이야기하고 싶어요
+          </button>
+          <button type="button" className={styles.quick_btn}>
+            오늘은 여기까지
+          </button>
+          <button type="button" className={styles.quick_btn}>
+            도움이 됐어요
+          </button>
         </div>
-        <div className="chat__input-wrapper">
+        <div className={styles.input_wrapper}>
           <textarea
-            className="chat__input"
+            className={styles.input}
             placeholder="메시지를 입력하세요..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
@@ -161,7 +169,8 @@ export function AIChat() {
             rows={1}
           />
           <button
-            className="chat__send-btn"
+            type="button"
+            className={styles.send_btn}
             onClick={handleSend}
             disabled={!inputValue.trim()}
             aria-label="메시지 보내기"

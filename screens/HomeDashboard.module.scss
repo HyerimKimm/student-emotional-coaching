@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '@/shared/styles/_mixins' as *;
 @use '@/shared/styles/_variables' as *;
 
@@ -21,15 +22,159 @@
   }
 
   > .main_action {
-    background-color: $color-white;
+    @include card;
     margin-bottom: 1.5rem;
     text-align: center;
     padding: 2rem 1.25rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
     > .btn_primary {
       width: 100%;
       max-width: 280px;
     }
   }
+}
+
+.btn_primary {
+  @include flex(row, center, center);
+  gap: 0.5rem;
+  background: $color-brand;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: color.adjust($color-brand, $lightness: -8%);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn_secondary {
+  @include flex(row, center, center);
+  gap: 0.5rem;
+  background: $color-brand-light;
+  color: $color-brand;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: color.adjust($color-brand-light, $lightness: -5%);
+  }
+}
+
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.section_title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: $color-gray-900;
+  margin-bottom: 0.75rem;
+  padding-left: 0.25rem;
+}
+
+.mood_history {
+  @include card;
+}
+
+.mood_history_list {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding: 0.25rem 0;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.mood_history_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 3.5rem;
+}
+
+.mood_history_circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.circle_tired {
+  background: $mood-tired;
+}
+.circle_frustrated {
+  background: $mood-frustrated;
+}
+.circle_anxious {
+  background: $mood-anxious;
+}
+.circle_irritated {
+  background: $mood-irritated;
+}
+.circle_lonely {
+  background: $mood-lonely;
+}
+.circle_excited {
+  background: $mood-excited;
+}
+.circle_okay {
+  background: $mood-okay;
+}
+.circle_unsure {
+  background: $mood-unsure;
+}
+
+.mood_history_day {
+  font-size: 0.75rem;
+  color: $color-gray-500;
+}
+
+.ai_card {
+  @include card;
+  background: linear-gradient(135deg, $color-brand-light 0%, $color-white 100%);
+  border: 1px solid rgba($color-brand, 0.1);
+}
+
+.ai_card_header {
+  @include flex(row, space-between, center);
+  margin-bottom: 0.75rem;
+}
+
+.ai_card_badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: rgba($color-brand, 0.1);
+  color: $color-brand;
+  padding: 0.375rem 0.75rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.ai_card_text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: $color-gray-900;
+  margin-bottom: 1rem;
 }

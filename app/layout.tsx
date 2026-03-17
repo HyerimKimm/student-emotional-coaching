@@ -54,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${notoSansKR.variable} font-sans antialiased`}>
+      <body className={notoSansKR.variable}>
         <div className={styles.app_container}>
           <Suspense
             fallback={

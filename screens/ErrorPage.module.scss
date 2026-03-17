@@ -1,0 +1,41 @@
+@use '@/shared/styles/_mixins' as *;
+@use '@/shared/styles/_variables' as *;
+
+.wrap {
+  min-height: 100vh;
+  @include flex(column, center, center);
+  background: $color-gray-50;
+  padding: 1.5rem;
+}
+
+.inner {
+  @include flex(column, center, center);
+  text-align: center;
+}
+
+.icon_wrap {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: rgba($color-error, 0.1);
+  @include flex(row, center, center);
+  margin-bottom: 1.5rem;
+}
+
+.icon {
+  color: $color-error;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $color-gray-900;
+  margin-bottom: 0.75rem;
+}
+
+.text {
+  max-width: 20rem;
+  font-size: 1rem;
+  line-height: 1.625;
+  color: $color-gray-500;
+}
