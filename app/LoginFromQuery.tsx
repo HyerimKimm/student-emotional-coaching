@@ -47,7 +47,7 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
       .then((res) => {
         if (res.ok) {
           res.json().then((data) => {
-            setLoginData(data.user, data.session, data.profile);
+            setLoginData(data.data?.user, data.data?.session, data.data?.profile);
             setStatus('done');
           });
         } else {
