@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import styles from './Navigation.module.scss';
 
 type Screen = 'home' | 'check' | 'chat';
 
@@ -32,9 +33,9 @@ export default function Navigation() {
   }, [pathname]);
 
   return (
-    <nav className="nav-tabs" role="tablist">
+    <nav className={styles.nav_tabs} role="tablist">
       <button
-        className={`nav-tabs__item ${currentScreen === 'home' ? 'nav-tabs__item--active' : ''}`}
+        className={`${styles.item} ${currentScreen === 'home' ? styles.active : ''}`}
         onClick={() => handleScreenChange('home')}
         role="tab"
         aria-selected={currentScreen === 'home'}
@@ -42,7 +43,7 @@ export default function Navigation() {
         홈
       </button>
       <button
-        className={`nav-tabs__item ${currentScreen === 'check' ? 'nav-tabs__item--active' : ''}`}
+        className={`${styles.item} ${currentScreen === 'check' ? styles.active : ''}`}
         onClick={() => handleScreenChange('check')}
         role="tab"
         aria-selected={currentScreen === 'check'}
@@ -50,7 +51,7 @@ export default function Navigation() {
         마음 체크
       </button>
       <button
-        className={`nav-tabs__item ${currentScreen === 'chat' ? 'nav-tabs__item--active' : ''}`}
+        className={`${styles.item} ${currentScreen === 'chat' ? styles.active : ''}`}
         onClick={() => handleScreenChange('chat')}
         role="tab"
         aria-selected={currentScreen === 'chat'}

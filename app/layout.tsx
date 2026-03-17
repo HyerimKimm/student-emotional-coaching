@@ -2,9 +2,11 @@ import type { Metadata, Viewport } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { Suspense } from 'react';
-// import './globals.css';
+
 import '@/shared/styles/globals.scss';
+
 import Navigation from '@/widget/navigation/Navigation';
+
 import LoginFromQuery from './LoginFromQuery';
 
 import styles from './layout.module.scss';
@@ -57,7 +59,7 @@ export default function RootLayout({
           <Suspense
             fallback={
               <div className={styles.loading}>
-                <p className="text-neutral-500">로그인 중...</p>
+                <p className={styles.loading_text}>로그인 중...</p>
               </div>
             }
           >

@@ -14,3 +14,7 @@
 .loading {
   @include flex(column, center, center);
 }
+
+.loading_text {
+  color: $color-gray-500;
+}

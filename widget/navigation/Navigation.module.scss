@@ -1,5 +1,5 @@
-@use '_mixins' as *;
-@use '_variables' as *;
+@use '@/shared/styles/_mixins' as *;
+@use '@/shared/styles/_variables' as *;
 
 .nav-tabs {
   display: flex;
@@ -8,27 +8,27 @@
   padding: 0.25rem;
   margin: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
 
-  &__item {
-    flex: 1;
-    padding: 0.75rem 1rem;
-    border: none;
-    background: transparent;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: $color-gray-600;
-    cursor: pointer;
-    transition: all 0.2s ease;
+.item {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $color-gray-600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 
-    &--active {
-      background: $color-brand;
-      color: white;
-    }
+  &.active {
+    background: $color-brand;
+    color: white;
+  }
 
-    &:hover:not(&--active) {
-      background: $color-brand-light;
-      color: $color-brand;
-    }
+  &:hover:not(.active) {
+    background: $color-brand-light;
+    color: $color-brand;
   }
 }
