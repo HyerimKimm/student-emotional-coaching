@@ -20,7 +20,7 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
   const setLoginData = useAuthStore((state) => state.setLoginData);
   const logout = useAuthStore((state) => state.logout);
 
-  const { mutate: login } = useLogin();
+  const { mutate: loginMutate } = useLogin();
 
   const [status, setStatus] = useState<Status>('loading');
 
@@ -42,7 +42,7 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
       return;
     }
 
-    login(
+    loginMutate(
       { email: id!, password: password! },
       {
         onSuccess: (res) => {
@@ -56,7 +56,7 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
         },
       }
     );
-  }, [id, password, hasCredentials, router, setLoginData, logout, isAlreadyLoggedIn, login]);
+  }, [id, password, hasCredentials, router, setLoginData, logout, isAlreadyLoggedIn, loginMutate]);
 
   if (status === 'loading') {
     return (
