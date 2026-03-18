@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import ErrorPage from '@/screens/error-page/ErrorPage';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
 
@@ -29,35 +30,23 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
 
   useEffect(() => {
     if (isAlreadyLoggedIn) {
-      setStatus('done');
+      queueMicrotask(() => setStatus('done'));
       return;
     }
 
     if (!hasCredentials) {
       /* 쿼리파라미터에 id, pw 값이 없는 경우 */
-      setStatus('fail');
+      queueMicrotask(() => setStatus('fail'));
       return;
     }
 
-    fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: id, password: password }),
-    })
+    axios
+      .post('/api/auth/login', { email: id, password })
       .then((res) => {
-        if (res.ok) {
-          res.json().then((data) => {
-            setLoginData(data.data?.user, data.data?.session, data.data?.profile);
-            setStatus('done');
-          });
-        } else {
-          logout();
-          setStatus('fail');
-          router.replace('/error');
-        }
+        setLoginData(res.data?.data?.user, res.data?.data?.session, res.data?.data?.profile);
+        setStatus('done');
       })
       .catch((err) => {
-        if (err.name === 'AbortError') return;
         logout();
         setStatus('fail');
         router.replace('/error');
