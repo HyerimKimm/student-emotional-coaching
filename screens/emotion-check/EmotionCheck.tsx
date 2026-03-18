@@ -3,16 +3,19 @@
 import { useState, useMemo } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { EMOTIONS, ENERGY_LEVELS, type ValanceType, type EmotionType } from '@/shared/lib/emotions';
+import {
+  EMOTION_OPTIONS,
+  ENERGY_LEVEL_OPTIONS,
+  type ValanceType,
+  type EmotionOptionType,
+  VALENCE_OPTIONS,
+  EnergyLevelType,
+  EmotionType,
+} from '@/shared/lib/emotions';
 import { Textarea } from '@/shared/ui/textarea/Textarea';
-import { Toggle, ToggleOption } from '@/shared/ui/toggle/Toggle';
+import { Toggle } from '@/shared/ui/toggle/Toggle';
 
 import styles from './EmotionCheck.module.scss';
-
-const VALENCE_OPTIONS: ToggleOption[] = [
-  { value: 'positive', label: '긍정' },
-  { value: 'negative', label: '부정' },
-];
 
 export function EmotionCheck() {
   const router = useRouter();
@@ -21,17 +24,17 @@ export function EmotionCheck() {
   const [valence, setValence] = useState<ValanceType>('positive');
 
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
-  const [energyLevel, setEnergyLevel] = useState<string>('');
+  const [energyLevel, setEnergyLevel] = useState<EnergyLevelType>('medium');
   const [thoughts, setThoughts] = useState('');
 
-  const currentEmotions = useMemo<EmotionType[]>(() => {
+  const currentEmotions = useMemo<EmotionOptionType[]>(() => {
     if (valence === 'positive') {
-      return EMOTIONS.filter((e) => e.valence === 'positive');
+      return EMOTION_OPTIONS.filter((e) => e.valence === 'positive');
     }
-    return EMOTIONS.filter((e) => e.valence === 'negative');
+    return EMOTION_OPTIONS.filter((e) => e.valence === 'negative');
   }, [valence]);
 
-  const toggleEmotion = (emotionKey: string) => {
+  const toggleEmotion = (emotionKey: EmotionType) => {
     setSelectedEmotions((prev) =>
       prev.includes(emotionKey) ? prev.filter((key) => key !== emotionKey) : [...prev, emotionKey]
     );
@@ -64,17 +67,17 @@ export function EmotionCheck() {
       <div className={styles.card}>
         <h2 className={styles.title}>에너지 수준</h2>
         <div className={styles.energy_level}>
-          {ENERGY_LEVELS.map((level) => (
-            <div key={level.id} className={styles.energy_item}>
+          {ENERGY_LEVEL_OPTIONS.map((level) => (
+            <div key={level.value} className={styles.energy_item}>
               <input
                 type="radio"
-                id={level.id}
+                id={level.value}
                 name="energy"
-                value={level.id}
-                checked={energyLevel === level.id}
-                onChange={(e) => setEnergyLevel(e.target.value)}
+                value={level.value}
+                checked={energyLevel === level.value}
+                onChange={(e) => setEnergyLevel(e.target.value as EnergyLevelType)}
               />
-              <label htmlFor={level.id}>{level.label}</label>
+              <label htmlFor={level.value}>{level.label}</label>
             </div>
           ))}
         </div>

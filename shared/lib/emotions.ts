@@ -1,20 +1,35 @@
 export type ValanceType = 'positive' | 'negative';
 
-export type ArousalType = 'low' | 'medium' | 'high';
+export type EnergyLevelType = 'low' | 'medium' | 'high';
 
-export type EmotionType = {
-  key: string;
+export type EmotionType =
+  | 'tired'
+  | 'frustrated'
+  | 'anxious'
+  | 'irritated'
+  | 'lonely'
+  | 'sad'
+  | 'angry'
+  | 'happy'
+  | 'excited'
+  | 'calm'
+  | 'satisfied'
+  | 'proud'
+  | 'unknown';
+
+export type EmotionOptionType = {
+  key: EmotionType;
   label: string;
   valence: ValanceType;
   color: string;
 };
 
-export type EnergyLevelType = {
-  id: string;
-  label: string;
-};
+export const VALENCE_OPTIONS = [
+  { value: 'positive', label: '긍정' },
+  { value: 'negative', label: '부정' },
+];
 
-export const EMOTIONS: EmotionType[] = [
+export const EMOTION_OPTIONS: EmotionOptionType[] = [
   {
     key: 'tired',
     label: '지침',
@@ -95,8 +110,8 @@ export const EMOTIONS: EmotionType[] = [
   },
 ];
 
-export const ENERGY_LEVELS: EnergyLevelType[] = [
-  { id: 'low', label: '낮음' },
-  { id: 'medium', label: '보통' },
-  { id: 'high', label: '높음' },
+export const ENERGY_LEVEL_OPTIONS: { value: EnergyLevelType; label: string }[] = [
+  { value: 'low', label: '낮음' },
+  { value: 'medium', label: '보통' },
+  { value: 'high', label: '높음' },
 ];
