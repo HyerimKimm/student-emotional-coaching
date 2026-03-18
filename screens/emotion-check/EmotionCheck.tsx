@@ -40,6 +40,14 @@ export function EmotionCheck() {
     );
   };
 
+  const handleSubmit = async () => {
+    try {
+      router.push('/chat');
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div className={styles.emotion_check}>
       <div className={styles.card}>
@@ -93,12 +101,7 @@ export function EmotionCheck() {
       </div>
 
       <div className={styles.submit_section}>
-        <button
-          className={styles.btn_primary}
-          onClick={() => {
-            router.push('/chat');
-          }}
-        >
+        <button className={styles.btn_primary} onClick={handleSubmit}>
           <MessageCircle size={20} />
           AI와 대화 시작
         </button>
