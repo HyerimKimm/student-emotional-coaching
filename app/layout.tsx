@@ -64,12 +64,12 @@ export default function RootLayout({
               </div>
             }
           >
-            <LoginFromQuery>
-              <Providers>
+            <Providers>
+              <LoginFromQuery>
                 <Navigation />
                 {children}
-              </Providers>
-            </LoginFromQuery>
+              </LoginFromQuery>
+            </Providers>
           </Suspense>
         </div>
         <Analytics />

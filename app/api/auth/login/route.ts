@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/shared/lib/supabase';
-import { ApiResponseType } from '@/shared/types/api';
+import { ApiResponseType } from '@/shared/type/api';
 import { Session, User } from '@supabase/supabase-js';
 
 export async function POST(request: Request): Promise<

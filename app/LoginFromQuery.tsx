@@ -2,9 +2,9 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import ErrorPage from '@/screens/error-page/ErrorPage';
 import { useAuthStore } from '@/shared/store/useAuthStore';
+import useLogin from '@/shared/query/auth/useLogin';
 
 import styles from './LoginFromQuery.module.scss';
 
@@ -19,6 +19,8 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
   const profile = useAuthStore((state) => state.profile);
   const setLoginData = useAuthStore((state) => state.setLoginData);
   const logout = useAuthStore((state) => state.logout);
+
+  const { mutate: login } = useLogin();
 
   const [status, setStatus] = useState<Status>('loading');
 
@@ -40,18 +42,21 @@ export default function LoginFromQuery({ children }: { children: React.ReactNode
       return;
     }
 
-    axios
-      .post('/api/auth/login', { email: id, password })
-      .then((res) => {
-        setLoginData(res.data?.data?.user, res.data?.data?.session, res.data?.data?.profile);
-        setStatus('done');
-      })
-      .catch((err) => {
-        logout();
-        setStatus('fail');
-        router.replace('/error');
-      });
-  }, [id, password, hasCredentials, router, setLoginData, logout, isAlreadyLoggedIn]);
+    login(
+      { email: id!, password: password! },
+      {
+        onSuccess: (res) => {
+          setLoginData(res?.data?.user, res?.data?.session, res?.data?.profile);
+          setStatus('done');
+        },
+        onError: () => {
+          logout();
+          setStatus('fail');
+          router.replace('/error');
+        },
+      }
+    );
+  }, [id, password, hasCredentials, router, setLoginData, logout, isAlreadyLoggedIn, login]);
 
   if (status === 'loading') {
     return (
