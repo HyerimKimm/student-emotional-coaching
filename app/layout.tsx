@@ -8,6 +8,7 @@ import '@/shared/styles/globals.scss';
 import Navigation from '@/widget/navigation/Navigation';
 
 import LoginFromQuery from './LoginFromQuery';
+import Providers from './providers';
 
 import styles from './layout.module.scss';
 
@@ -64,8 +65,10 @@ export default function RootLayout({
             }
           >
             <LoginFromQuery>
-              <Navigation />
-              {children}
+              <Providers>
+                <Navigation />
+                {children}
+              </Providers>
             </LoginFromQuery>
           </Suspense>
         </div>
