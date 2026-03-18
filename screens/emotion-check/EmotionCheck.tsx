@@ -16,14 +16,17 @@ import { Textarea } from '@/shared/ui/textarea/Textarea';
 import { Toggle } from '@/shared/ui/toggle/Toggle';
 
 import styles from './EmotionCheck.module.scss';
+import { useAuthStore } from '@/shared/stores/useAuthStore';
 
 export function EmotionCheck() {
   const router = useRouter();
 
+  const { profile } = useAuthStore();
+
   /** 오늘의 마음은 어떤 느낌에 가까워요? 선택지 (긍정, 부정) */
   const [valence, setValence] = useState<ValanceType>('positive');
 
-  const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
+  const [selectedEmotions, setSelectedEmotions] = useState<EmotionType[]>([]);
   const [energyLevel, setEnergyLevel] = useState<EnergyLevelType>('medium');
   const [thoughts, setThoughts] = useState('');
 
@@ -34,14 +37,38 @@ export function EmotionCheck() {
     return EMOTION_OPTIONS.filter((e) => e.valence === 'negative');
   }, [valence]);
 
-  const toggleEmotion = (emotionKey: EmotionType) => {
+  const toggleEmotion = (emotion: EmotionType) => {
     setSelectedEmotions((prev) =>
-      prev.includes(emotionKey) ? prev.filter((key) => key !== emotionKey) : [...prev, emotionKey]
+      prev.includes(emotion) ? prev.filter((key) => key !== emotion) : [...prev, emotion]
     );
   };
 
   const handleSubmit = async () => {
     try {
+      if (!profile?.id) {
+        throw new Error('로그인 정보를 가져올 수 없습니다.');
+      }
+
+      const response = await fetch('/api/mood-entries/today', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentId: profile.id,
+          emotions: selectedEmotions.join(','),
+          energyLevel: energyLevel,
+          thoughts: thoughts,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('기분 기록 추가에 실패했습니다.');
+      }
+
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
       router.push('/chat');
     } catch (e) {
       console.error(e);

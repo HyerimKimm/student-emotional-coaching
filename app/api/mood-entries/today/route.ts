@@ -12,23 +12,27 @@ export async function POST(request: Request): Promise<NextResponse<ApiResponseTy
 
     const { studentId, emotions, energyLevel, thoughts } = body;
 
-    if (!studentId || !emotions || !energyLevel || !thoughts) {
+    if (!studentId || emotions === undefined || !energyLevel || thoughts === undefined) {
       return NextResponse.json(
         { success: false, code: 400, message: '필수 필드가 누락되었습니다.', data: null },
         { status: 400 }
       );
     }
 
-    const { data, error } = await supabase.from('mood_entries').insert({
-      student_id: studentId,
-      emotions: emotions,
+    const checkDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+    const { error } = await supabase.from('mood_entries').insert({
+      user_id: studentId,
+      check_date: checkDate,
+      emotion_key:
+        typeof emotions === 'string' ? emotions : Array.isArray(emotions) ? emotions.join(',') : '',
       energy_level: energyLevel,
-      thoughts: thoughts,
+      note: thoughts ?? '',
     });
 
     if (error) {
       return NextResponse.json(
-        { success: false, code: 500, message: '기분 기록 추가에 실패했습니다.', data: null },
+        { success: false, code: 500, message: error.message, data: null },
         { status: 500 }
       );
     }
