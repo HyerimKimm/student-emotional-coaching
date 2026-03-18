@@ -1,18 +1,12 @@
 'use client';
 
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { EMOTIONS, ENERGY_LEVELS, type ValanceType, type EmotionType } from '@/shared/lib/emotions';
+import { Textarea } from '@/shared/ui/textarea/Textarea';
 
 import styles from './EmotionCheck.module.scss';
-
-const LINE_HEIGHT_PX = 24; // 0.9375rem * 1.6 (app.scss line-height)
-const PADDING_VERTICAL_PX = 32; // 1rem * 2
-const MIN_LINES = 3;
-const MAX_LINES = 6;
-const MIN_HEIGHT_PX = MIN_LINES * LINE_HEIGHT_PX + PADDING_VERTICAL_PX;
-const MAX_HEIGHT_PX = MAX_LINES * LINE_HEIGHT_PX + PADDING_VERTICAL_PX;
 
 const VALENCE_LABELS: Record<ValanceType, string> = {
   positive: '긍정',
@@ -23,28 +17,12 @@ const VALENCE_LABELS: Record<ValanceType, string> = {
 export function EmotionCheck() {
   const router = useRouter();
 
+  /** 오늘의 마음은 어떤 느낌에 가까워요? 선택지 (긍정, 부정) */
   const [valence, setValence] = useState<ValanceType>('positive');
+
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
   const [energyLevel, setEnergyLevel] = useState<string>('');
   const [thoughts, setThoughts] = useState('');
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const adjustTextareaHeight = () => {
-    const ta = textareaRef.current;
-    if (!ta) return;
-    ta.style.height = 'auto';
-    ta.style.overflowY = 'hidden';
-    const h = Math.min(Math.max(ta.scrollHeight, MIN_HEIGHT_PX), MAX_HEIGHT_PX);
-    ta.style.height = `${h}px`;
-    if (h >= MAX_HEIGHT_PX) ta.style.overflowY = 'auto';
-  };
-
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = `${MIN_HEIGHT_PX}px`;
-      textareaRef.current.style.overflowY = 'hidden';
-    }
-  }, []);
 
   const currentEmotions = useMemo<EmotionType[]>(() => {
     if (valence === 'positive') {
@@ -112,19 +90,12 @@ export function EmotionCheck() {
       </div>
 
       <div className={styles.card}>
-        <div>
-          <label className={styles.text_input_label}>지금 떠오르는 생각이 있다면 편하게 적어주세요</label>
-          <textarea
-            ref={textareaRef}
-            className={styles.text_input_field}
-            placeholder="요즘 공부가 잘 안돼요. 시험이 다가와서 답답해요."
-            value={thoughts}
-            onChange={(e) => {
-              setThoughts(e.target.value);
-              adjustTextareaHeight();
-            }}
-          />
-        </div>
+        <Textarea
+          label="지금 떠오르는 생각이 있다면 편하게 적어주세요"
+          placeholder="요즘 공부가 잘 안돼요. 시험이 다가와서 답답해요."
+          value={thoughts}
+          onChange={(e) => setThoughts(e.target.value)}
+        />
       </div>
 
       <div className={styles.submit_section}>

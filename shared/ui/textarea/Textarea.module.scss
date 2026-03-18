@@ -1,0 +1,31 @@
+@use '@/shared/styles/_variables' as *;
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  color: $color-gray-500;
+  margin-bottom: 0.75rem;
+}
+
+.field {
+  width: 100%;
+  min-height: 100px;
+  padding: 1rem;
+  border: 1.5px solid $color-gray-200;
+  border-radius: 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: $color-gray-900;
+  resize: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: $color-gray-500;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-brand;
+  }
+}
