@@ -1,4 +1,4 @@
-@use '@/shared/styles/_variables' as *;
+@use '@/shared/style/_variables' as *;
 
 @mixin flex($direction: row, $justify: center, $align: center) {
   display: flex;

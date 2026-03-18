@@ -12,7 +12,7 @@ const nextConfig = {
     unoptimized: true,
   },
   sassOptions: {
-    includePaths: [path.join(__dirname, 'shared/styles')],
+    includePaths: [path.join(__dirname, 'shared/style')],
   },
 };
 

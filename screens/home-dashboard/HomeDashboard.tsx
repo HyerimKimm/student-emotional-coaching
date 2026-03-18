@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuthStore } from '@/shared/stores/useAuthStore';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 import { Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 

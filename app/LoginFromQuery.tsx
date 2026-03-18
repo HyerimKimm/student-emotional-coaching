@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ErrorPage from '@/screens/error-page/ErrorPage';
-import { useAuthStore } from '@/shared/stores/useAuthStore';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 
 import styles from './LoginFromQuery.module.scss';
 

@@ -3,7 +3,7 @@ import { Noto_Sans_KR } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { Suspense } from 'react';
 
-import '@/shared/styles/globals.scss';
+import '@/shared/style/globals.scss';
 
 import Navigation from '@/widget/navigation/Navigation';
 

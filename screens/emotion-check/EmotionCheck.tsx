@@ -16,7 +16,7 @@ import { Textarea } from '@/shared/ui/textarea/Textarea';
 import { Toggle } from '@/shared/ui/toggle/Toggle';
 
 import styles from './EmotionCheck.module.scss';
-import { useAuthStore } from '@/shared/stores/useAuthStore';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 
 export function EmotionCheck() {
   const router = useRouter();
