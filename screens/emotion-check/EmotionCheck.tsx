@@ -5,15 +5,14 @@ import { MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { EMOTIONS, ENERGY_LEVELS, type ValanceType, type EmotionType } from '@/shared/lib/emotions';
 import { Textarea } from '@/shared/ui/textarea/Textarea';
-import { Toggle } from '@/shared/ui/toggle/Toggle';
+import { Toggle, ToggleOption } from '@/shared/ui/toggle/Toggle';
 
 import styles from './EmotionCheck.module.scss';
 
-const VALENCE_LABELS: Record<ValanceType, string> = {
-  positive: '긍정',
-  negative: '부정',
-  neutral: '중립',
-};
+const VALENCE_OPTIONS: ToggleOption[] = [
+  { value: 'positive', label: '긍정' },
+  { value: 'negative', label: '부정' },
+];
 
 export function EmotionCheck() {
   const router = useRouter();
@@ -29,7 +28,7 @@ export function EmotionCheck() {
     if (valence === 'positive') {
       return EMOTIONS.filter((e) => e.valence === 'positive');
     }
-    return EMOTIONS.filter((e) => e.valence === 'negative' || e.valence === 'neutral');
+    return EMOTIONS.filter((e) => e.valence === 'negative');
   }, [valence]);
 
   const toggleEmotion = (emotionKey: string) => {
@@ -44,10 +43,7 @@ export function EmotionCheck() {
         <div className={styles.header}>
           <h2 className={styles.title}>오늘 마음은 어떤 느낌에 가까워요?</h2>
           <Toggle
-            options={[
-              { value: 'positive', label: VALENCE_LABELS.positive },
-              { value: 'negative', label: VALENCE_LABELS.negative },
-            ]}
+            options={VALENCE_OPTIONS}
             value={valence}
             onChange={(v) => setValence(v as ValanceType)}
           />
