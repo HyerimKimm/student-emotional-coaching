@@ -5,6 +5,7 @@ import { MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { EMOTIONS, ENERGY_LEVELS, type ValanceType, type EmotionType } from '@/shared/lib/emotions';
 import { Textarea } from '@/shared/ui/textarea/Textarea';
+import { Toggle } from '@/shared/ui/toggle/Toggle';
 
 import styles from './EmotionCheck.module.scss';
 
@@ -42,20 +43,14 @@ export function EmotionCheck() {
       <div className={styles.card}>
         <div className={styles.header}>
           <h2 className={styles.title}>오늘 마음은 어떤 느낌에 가까워요?</h2>
-          <div className={styles.emotion_toggle}>
-            <button
-              className={`${styles.toggle_btn} ${valence === 'positive' ? styles.active : ''}`}
-              onClick={() => setValence('positive')}
-            >
-              {VALENCE_LABELS.positive}
-            </button>
-            <button
-              className={`${styles.toggle_btn} ${valence === 'negative' ? styles.active : ''}`}
-              onClick={() => setValence('negative')}
-            >
-              {VALENCE_LABELS.negative}
-            </button>
-          </div>
+          <Toggle
+            options={[
+              { value: 'positive', label: VALENCE_LABELS.positive },
+              { value: 'negative', label: VALENCE_LABELS.negative },
+            ]}
+            value={valence}
+            onChange={(v) => setValence(v as ValanceType)}
+          />
         </div>
         <div className={styles.emotion_chips}>
           {currentEmotions.map((emotion) => (
