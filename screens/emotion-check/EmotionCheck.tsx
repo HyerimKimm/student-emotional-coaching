@@ -14,7 +14,9 @@ import { Textarea } from '@/shared/ui/textarea/Textarea';
 import { Toggle } from '@/shared/ui/toggle/Toggle';
 
 import styles from './EmotionCheck.module.scss';
-import useGetTodayQuery from '@/shared/query/mood-entries/useGetTodayQuery';
+import useGetTodayQuery, {
+  useInvalidateTodayMoodEntry,
+} from '@/shared/query/mood-entries/useGetTodayQuery';
 import useAddTodayMutation from '@/shared/query/mood-entries/useAddTodayMutation';
 import useUpdateTodayMutation from '@/shared/query/mood-entries/useUpdateTodayMutation';
 
@@ -24,6 +26,8 @@ export function EmotionCheck() {
   const { data: todayMoodEntry, isLoading: isLoadingTodayMoodEntry } = useGetTodayQuery(); // 오늘의 기분 기록 조회
   const { mutate: addTodayMutation } = useAddTodayMutation(); // 오늘의 기분 기록 추가
   const { mutate: updateTodayMutation } = useUpdateTodayMutation(); // 오늘의 기분 기록 수정
+
+  const invalidateToday = useInvalidateTodayMoodEntry(); // 오늘의 기분 기록 조회 무효화
 
   /** 오늘의 마음은 어떤 느낌에 가까워요? 선택지 (긍정, 부정) */
   const [valence, setValence] = useState<ValanceType>('positive');
@@ -65,6 +69,7 @@ export function EmotionCheck() {
         },
         {
           onSuccess: () => {
+            invalidateToday();
             router.push('/chat');
           },
           onError: (e) => {
@@ -82,6 +87,7 @@ export function EmotionCheck() {
         },
         {
           onSuccess: () => {
+            invalidateToday();
             router.push('/chat');
           },
           onError: (e) => {
