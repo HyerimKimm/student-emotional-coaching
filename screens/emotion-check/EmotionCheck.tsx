@@ -48,6 +48,15 @@ export function EmotionCheck() {
   };
 
   const handleSubmit = async () => {
+    if (!selectedEmotions.length) {
+      /* Todo. 기분을 선택하지 않았다는 메시지 표시 */
+      return;
+    }
+    if (!energyLevel) {
+      /* Todo. 에너지 수준을 선택하지 않았다는 메시지 표시 */
+      return;
+    }
+
     if (todayMoodEntry?.data) {
       /* Todo. 오늘의 기분 기록이 있으면 수정 */
       updateTodayMutation(
