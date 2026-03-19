@@ -18,13 +18,14 @@ import { Toggle } from '@/shared/ui/toggle/Toggle';
 import styles from './EmotionCheck.module.scss';
 import useGetTodayQuery from '@/shared/query/mood-entries/useGetTodayQuery';
 import useAddTodayMutation from '@/shared/query/mood-entries/useAddTodayMutation';
+import useUpdateTodayMutation from '@/shared/query/mood-entries/useUpdateTodayMutation';
 
 export function EmotionCheck() {
   const router = useRouter();
 
   const { data: todayMoodEntry } = useGetTodayQuery(); // 오늘의 기분 기록 조회
   const { mutate: addTodayMutation } = useAddTodayMutation(); // 오늘의 기분 기록 추가
-
+  const { mutate: updateTodayMutation } = useUpdateTodayMutation(); // 오늘의 기분 기록 수정
   /** 오늘의 마음은 어떤 느낌에 가까워요? 선택지 (긍정, 부정) */
   const [valence, setValence] = useState<ValanceType>('positive');
 
@@ -48,6 +49,21 @@ export function EmotionCheck() {
   const handleSubmit = async () => {
     if (todayMoodEntry?.data) {
       /* Todo. 오늘의 기분 기록이 있으면 수정 */
+      updateTodayMutation(
+        {
+          emotions: selectedEmotions.join(','),
+          energyLevel: energyLevel,
+          thoughts: thoughts,
+        },
+        {
+          onSuccess: () => {
+            router.push('/chat');
+          },
+          onError: (e) => {
+            console.error(e);
+          },
+        }
+      );
     } else {
       /* 오늘의 기분 기록이 없으면 추가 */
       addTodayMutation(
