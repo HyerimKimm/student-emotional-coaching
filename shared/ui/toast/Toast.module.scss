@@ -2,9 +2,11 @@
 @use '@/shared/style/_mixins' as *;
 
 .toast_wrap {
-  width: fit-content;
-  position: absolute;
+  width: 250px;
+  position: fixed;
   bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
   overflow: scroll;
   @include flex(column, flex-end, center);
 
