@@ -24,7 +24,7 @@ $color-success: #16a34a;
 $color-backdrop: rgba(0, 0, 0, 0.5);
 $color-backdrop-white: rgba(255, 255, 255, 0.5);
 
-$default-font-family: 'Noto Sans KR', sans-serif;
+$defaultBoxShadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
 
 // Mood colors (감정 원)
 $mood-tired: #94a3b8;
@@ -35,3 +35,12 @@ $mood-lonely: #8b5cf6;
 $mood-excited: #10b981;
 $mood-okay: #3b82f6;
 $mood-unsure: #6b7280;
+
+$default-font-family: 'Noto Sans KR', sans-serif;
+
+$zi0: 0;
+$zi1: 1;
+$zi2: 2;
+$ziModal: 10000;
+$ziLoading: 20000;
+$ziToast: 30000;
