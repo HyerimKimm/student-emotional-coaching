@@ -11,6 +11,7 @@ import LoginFromQuery from './LoginFromQuery';
 import Providers from './providers';
 
 import styles from './layout.module.scss';
+import { Toast } from '@/shared/ui/toast';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -69,6 +70,7 @@ export default function RootLayout({
                 <Navigation />
                 {children}
               </LoginFromQuery>
+              <Toast />
             </Providers>
           </Suspense>
         </div>

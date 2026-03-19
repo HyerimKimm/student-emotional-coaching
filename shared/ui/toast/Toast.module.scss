@@ -6,7 +6,7 @@
   position: absolute;
   bottom: 1rem;
   overflow: scroll;
-  @include flex(column, flex-end, center, 0.5rem);
+  @include flex(column, flex-end, center);
 
   &::-webkit-scrollbar {
     width: 0; /* 스크롤바의 너비 설정 */
