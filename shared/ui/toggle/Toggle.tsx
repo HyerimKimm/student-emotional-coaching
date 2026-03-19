@@ -23,7 +23,9 @@ export function Toggle({ options, value, onChange }: ToggleProps) {
           role="tab"
           aria-selected={value === option.value}
           className={`${styles.toggle_btn} ${value === option.value ? styles.active : ''}`}
-          onClick={() => onChange(option.value)}
+          onClick={() => {
+            onChange(option.value);
+          }}
         >
           {option.label}
         </button>

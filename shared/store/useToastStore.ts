@@ -8,13 +8,16 @@ type ToastType = {
   id: string;
   state: ToastStateType;
   message: string;
+  isClosing: boolean;
 };
 
 type ToastStoreType = {
   toastList: ToastType[];
   show: (state: ToastStateType, message: string) => void;
-  close: () => void;
+  close: (id?: string) => void;
 };
+
+const TOAST_EXIT_DURATION_MS = 260;
 
 const store: StateCreator<ToastStoreType> = (set, get) => ({
   toastList: [],
@@ -26,20 +29,33 @@ const store: StateCreator<ToastStoreType> = (set, get) => ({
       id: uniqueKey, // 고유한 ID 생성
       state: state,
       message: message,
+      isClosing: false,
     };
 
     set({ toastList: [...get().toastList, newToast] });
 
     setTimeout(() => {
-      get().close();
+      get().close(uniqueKey);
     }, 3000);
   },
 
-  close: () => {
+  close: (id) => {
+    const targetId = id ?? get().toastList[0]?.id;
+    if (!targetId) return;
+
     set({
-      toastList: get().toastList.slice(1),
+      toastList: get().toastList.map((toast) =>
+        toast.id === targetId ? { ...toast, isClosing: true } : toast
+      ),
     });
+
+    setTimeout(() => {
+      set({
+        toastList: get().toastList.filter((toast) => toast.id !== targetId),
+      });
+    }, TOAST_EXIT_DURATION_MS);
   },
+
 });
 
 const useToastStore = create(devtools(store, { name: 'toastStore' }));

@@ -11,6 +11,12 @@
   box-shadow: $defaultBoxShadow;
   flex-shrink: 0;
   font-size: 14px;
+  animation: toast-enter 260ms ease-out both;
+  will-change: transform, opacity;
+
+  &.closing {
+    animation: toast-exit 260ms ease-in both;
+  }
 
   &.success {
     background-color: $color-success;
@@ -25,5 +31,27 @@
   > .text {
     flex-grow: 1;
     white-space: pre-wrap;
+  }
+}
+
+@keyframes toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
   }
 }
