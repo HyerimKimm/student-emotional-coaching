@@ -109,7 +109,79 @@ export async function POST(request: Request): Promise<NextResponse<ApiResponseTy
 }
 
 /** 오늘의 기분 기록 수정 */
-export async function PUT(request: Request) {}
+export async function PUT(request: Request): Promise<NextResponse<ApiResponseType<null>>> {
+  try {
+    const body = await request.json();
+
+    const { studentId, emotions, energyLevel, thoughts } = body;
+
+    if (!studentId || emotions === undefined || !energyLevel || thoughts === undefined) {
+      return NextResponse.json(
+        { success: false, code: 400, message: '필수 필드가 누락되었습니다.', data: null },
+        { status: 400 }
+      );
+    }
+
+    const checkDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+    const { data: existing, error: findError } = await supabase
+      .from('mood_entries')
+      .select('id')
+      .eq('user_id', studentId)
+      .eq('check_date', checkDate)
+      .maybeSingle();
+
+    if (findError) {
+      console.error('mood-entries/today PUT find error:', findError);
+      return NextResponse.json(
+        { success: false, code: 500, message: findError.message, data: null },
+        { status: 500 }
+      );
+    }
+
+    if (!existing) {
+      return NextResponse.json(
+        { success: false, code: 404, message: '오늘 등록된 기분 기록이 없습니다.', data: null },
+        { status: 404 }
+      );
+    }
+
+    const { error: updateError } = await supabase
+      .from('mood_entries')
+      .update({
+        emotion_key:
+          typeof emotions === 'string'
+            ? emotions
+            : Array.isArray(emotions)
+              ? emotions.join(',')
+              : '',
+        energy_level: energyLevel,
+        note: thoughts ?? '',
+        updated_at: new Date().toISOString(),
+      })
+      .eq('user_id', studentId)
+      .eq('check_date', checkDate);
+
+    if (updateError) {
+      console.error('mood-entries/today PUT update error:', updateError);
+      return NextResponse.json(
+        { success: false, code: 500, message: updateError.message, data: null },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, code: 200, message: '기분 기록 수정 성공', data: null },
+      { status: 200 }
+    );
+  } catch (e) {
+    console.error('mood-entries/today PUT error:', e);
+    return NextResponse.json(
+      { success: false, code: 500, message: '기분 기록 수정에 실패했습니다.', data: null },
+      { status: 500 }
+    );
+  }
+}
 
 /** 오늘의 기분 기록 삭제 */
 export async function DELETE(request: Request) {}
