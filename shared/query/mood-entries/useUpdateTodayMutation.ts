@@ -2,13 +2,13 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAuthStore } from '@/shared/store/useAuthStore';
 
-/** 오늘의 기분 기록 추가 */
-const useAddTodayMutation = () => {
+/** 오늘의 기분 기록 수정 */
+const useUpdateTodayMutation = () => {
   const profile = useAuthStore((state) => state.profile);
 
   return useMutation({
     mutationFn: async (variables: { emotions: string; energyLevel: string; thoughts: string }) => {
-      const response = await axios.post(`/api/mood-entries/today`, {
+      const response = await axios.put(`/api/mood-entries/today`, {
         studentId: profile?.id,
         emotions: variables.emotions,
         energyLevel: variables.energyLevel,
@@ -19,4 +19,4 @@ const useAddTodayMutation = () => {
   });
 };
 
-export default useAddTodayMutation;
+export default useUpdateTodayMutation;

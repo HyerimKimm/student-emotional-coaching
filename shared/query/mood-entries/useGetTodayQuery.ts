@@ -3,6 +3,7 @@ import QUERY_KEYS from '@/shared/query/config/queryKeys';
 import axios from 'axios';
 import { useAuthStore } from '@/shared/store/useAuthStore';
 
+/** 오늘의 기분 기록 조회 */
 const useGetTodayQuery = () => {
   const profile = useAuthStore((state) => state.profile);
 
