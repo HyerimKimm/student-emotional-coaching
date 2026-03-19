@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/shared/lib/supabase';
 import { ApiResponseType } from '@/shared/type/api';
 import { createClient } from '@supabase/supabase-js';
+import dayjs from 'dayjs';
 
 export type MoodEntryType = {
   id: string;
@@ -29,7 +30,7 @@ export async function GET(
       );
     }
 
-    const checkDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const checkDate = dayjs().format('YYYY-MM-DD');
 
     const { data, error } = await supabase
       .from('mood_entries')
@@ -106,7 +107,7 @@ export async function POST(request: Request): Promise<NextResponse<ApiResponseTy
       );
     }
 
-    const checkDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const checkDate = dayjs().format('YYYY-MM-DD');
 
     const { data: authData, error: authError } = await authedSupabase.auth.getUser(token);
 
@@ -167,7 +168,7 @@ export async function PUT(request: Request): Promise<NextResponse<ApiResponseTyp
       );
     }
 
-    const checkDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const checkDate = dayjs().format('YYYY-MM-DD');
 
     const { data: existing, error: findError } = await supabase
       .from('mood_entries')
@@ -202,7 +203,7 @@ export async function PUT(request: Request): Promise<NextResponse<ApiResponseTyp
               : '',
         energy_level: energyLevel,
         note: thoughts ?? '',
-        updated_at: new Date().toISOString(),
+        updated_at: dayjs().toISOString(),
       })
       .eq('user_id', studentId)
       .eq('check_date', checkDate);

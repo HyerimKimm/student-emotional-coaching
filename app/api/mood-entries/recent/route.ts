@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/shared/lib/supabase';
+import dayjs from 'dayjs';
 
 /** 최근 7일 내 기분 기록 조회 (쿼리: studentId = useAuthStore의 user.id 또는 profile.id) */
 export async function GET(request: Request) {
@@ -11,9 +12,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: '학생 ID(studentId)가 필요합니다.' }, { status: 400 });
     }
 
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-    const fromIso = sevenDaysAgo.toISOString();
+    const fromIso = dayjs().subtract(7, 'day').toISOString();
 
     const { data, error } = await supabase
       .from('mood_entries')

@@ -1,0 +1,15 @@
+@use '@/shared/style/_variables' as *;
+@use '@/shared/style/_mixins' as *;
+
+.toast_wrap {
+  width: fit-content;
+  position: absolute;
+  bottom: 1rem;
+  overflow: scroll;
+  @include flex(column, flex-end, center, 0.5rem);
+
+  &::-webkit-scrollbar {
+    width: 0; /* 스크롤바의 너비 설정 */
+    height: 0;
+  }
+}
