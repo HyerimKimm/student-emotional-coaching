@@ -3,7 +3,7 @@ import { supabase } from '@/shared/lib/supabase';
 import { ApiResponseType } from '@/shared/type/api';
 import { createClient } from '@supabase/supabase-js';
 
-type MoodEntryType = {
+export type MoodEntryType = {
   id: string;
   user_id: string;
   check_date: string;

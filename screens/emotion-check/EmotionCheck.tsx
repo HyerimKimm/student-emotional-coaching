@@ -6,12 +6,10 @@ import { useRouter } from 'next/navigation';
 import {
   EMOTION_OPTIONS,
   ENERGY_LEVEL_OPTIONS,
-  type ValanceType,
   type EmotionOptionType,
   VALENCE_OPTIONS,
-  EnergyLevelType,
-  EmotionType,
 } from '@/shared/lib/emotions';
+import { ValanceType, EnergyLevelType, EmotionType } from '@/shared/type/mood_entries';
 import { Textarea } from '@/shared/ui/textarea/Textarea';
 import { Toggle } from '@/shared/ui/toggle/Toggle';
 
@@ -23,7 +21,7 @@ import useUpdateTodayMutation from '@/shared/query/mood-entries/useUpdateTodayMu
 export function EmotionCheck() {
   const router = useRouter();
 
-  const { data: todayMoodEntry } = useGetTodayQuery(); // 오늘의 기분 기록 조회
+  const { data: todayMoodEntry, isLoading: isLoadingTodayMoodEntry } = useGetTodayQuery(); // 오늘의 기분 기록 조회
   const { mutate: addTodayMutation } = useAddTodayMutation(); // 오늘의 기분 기록 추가
   const { mutate: updateTodayMutation } = useUpdateTodayMutation(); // 오늘의 기분 기록 수정
 
@@ -95,14 +93,15 @@ export function EmotionCheck() {
   };
 
   useEffect(() => {
+    if (isLoadingTodayMoodEntry) return;
     if (!todayMoodEntry?.data) return;
 
     queueMicrotask(() => {
-      setSelectedEmotions(todayMoodEntry.data.emotion_key.split(',') as EmotionType[]);
-      setEnergyLevel(todayMoodEntry.data.energy_level as EnergyLevelType);
-      setThoughts(todayMoodEntry.data.note ?? '');
+      setSelectedEmotions(todayMoodEntry.data?.emotion_key.split(',') as EmotionType[]);
+      setEnergyLevel(todayMoodEntry.data?.energy_level as EnergyLevelType);
+      setThoughts(todayMoodEntry.data?.note ?? '');
     });
-  }, [todayMoodEntry?.data]);
+  }, [todayMoodEntry?.data, isLoadingTodayMoodEntry]);
 
   return (
     <div className={styles.emotion_check}>

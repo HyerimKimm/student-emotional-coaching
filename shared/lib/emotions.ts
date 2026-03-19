@@ -1,21 +1,4 @@
-export type ValanceType = 'positive' | 'negative';
-
-export type EnergyLevelType = 'low' | 'medium' | 'high';
-
-export type EmotionType =
-  | 'tired'
-  | 'frustrated'
-  | 'anxious'
-  | 'irritated'
-  | 'lonely'
-  | 'sad'
-  | 'angry'
-  | 'happy'
-  | 'excited'
-  | 'calm'
-  | 'satisfied'
-  | 'proud'
-  | 'unknown';
+import { ValanceType, EnergyLevelType, EmotionType } from '@/shared/type/mood_entries';
 
 export type EmotionOptionType = {
   key: EmotionType;
