@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/shared/lib/supabase';
 import { ApiResponseType } from '@/shared/type/api';
+import { createClient } from '@supabase/supabase-js';
 
 type MoodEntryType = {
   id: string;
@@ -66,6 +67,34 @@ export async function GET(
 /** 오늘의 기분 기록 추가 */
 export async function POST(request: Request): Promise<NextResponse<ApiResponseType<null>>> {
   try {
+    const authHeader = request.headers.get('authorization');
+    const token = authHeader?.startsWith('Bearer ') ? authHeader.slice('Bearer '.length) : null;
+
+    if (!token) {
+      return NextResponse.json(
+        { success: false, code: 401, message: '인증 토큰이 필요합니다.', data: null },
+        { status: 401 }
+      );
+    }
+
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return NextResponse.json(
+        { success: false, code: 500, message: 'Supabase 환경 변수가 누락되었습니다.', data: null },
+        { status: 500 }
+      );
+    }
+
+    const authedSupabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    });
+
     const body = await request.json();
 
     const { studentId, emotions, energyLevel, thoughts } = body;
@@ -79,7 +108,23 @@ export async function POST(request: Request): Promise<NextResponse<ApiResponseTy
 
     const checkDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
-    const { error } = await supabase.from('mood_entries').insert({
+    const { data: authData, error: authError } = await authedSupabase.auth.getUser(token);
+
+    if (authError || !authData?.user) {
+      return NextResponse.json(
+        { success: false, code: 401, message: '유효하지 않은 인증 토큰입니다.', data: null },
+        { status: 401 }
+      );
+    }
+
+    if (authData.user.id !== studentId) {
+      return NextResponse.json(
+        { success: false, code: 403, message: '본인의 데이터만 등록할 수 있습니다.', data: null },
+        { status: 403 }
+      );
+    }
+
+    const { error } = await authedSupabase.from('mood_entries').insert({
       user_id: studentId,
       check_date: checkDate,
       emotion_key:

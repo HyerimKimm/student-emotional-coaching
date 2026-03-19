@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import {
@@ -26,11 +26,12 @@ export function EmotionCheck() {
   const { data: todayMoodEntry } = useGetTodayQuery(); // 오늘의 기분 기록 조회
   const { mutate: addTodayMutation } = useAddTodayMutation(); // 오늘의 기분 기록 추가
   const { mutate: updateTodayMutation } = useUpdateTodayMutation(); // 오늘의 기분 기록 수정
+
   /** 오늘의 마음은 어떤 느낌에 가까워요? 선택지 (긍정, 부정) */
   const [valence, setValence] = useState<ValanceType>('positive');
 
   const [selectedEmotions, setSelectedEmotions] = useState<EmotionType[]>([]);
-  const [energyLevel, setEnergyLevel] = useState<EnergyLevelType>('medium');
+  const [energyLevel, setEnergyLevel] = useState<EnergyLevelType | null>(null);
   const [thoughts, setThoughts] = useState('');
 
   const currentEmotions = useMemo<EmotionOptionType[]>(() => {
@@ -83,6 +84,16 @@ export function EmotionCheck() {
       );
     }
   };
+
+  useEffect(() => {
+    if (!todayMoodEntry?.data) return;
+
+    queueMicrotask(() => {
+      setSelectedEmotions(todayMoodEntry.data.emotion_key.split(',') as EmotionType[]);
+      setEnergyLevel(todayMoodEntry.data.energy_level as EnergyLevelType);
+      setThoughts(todayMoodEntry.data.note ?? '');
+    });
+  }, [todayMoodEntry?.data]);
 
   return (
     <div className={styles.emotion_check}>
