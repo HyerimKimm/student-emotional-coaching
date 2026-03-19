@@ -17,11 +17,14 @@ import { Toggle } from '@/shared/ui/toggle/Toggle';
 
 import styles from './EmotionCheck.module.scss';
 import { useAuthStore } from '@/shared/store/useAuthStore';
+import useGetTodayQuery from '@/shared/query/mood-entries/useGetTodayQuery';
 
 export function EmotionCheck() {
   const router = useRouter();
 
   const { profile } = useAuthStore();
+
+  const { data: todayMoodEntry } = useGetTodayQuery();
 
   /** 오늘의 마음은 어떤 느낌에 가까워요? 선택지 (긍정, 부정) */
   const [valence, setValence] = useState<ValanceType>('positive');
