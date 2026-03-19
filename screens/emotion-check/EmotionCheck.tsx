@@ -16,15 +16,14 @@ import { Textarea } from '@/shared/ui/textarea/Textarea';
 import { Toggle } from '@/shared/ui/toggle/Toggle';
 
 import styles from './EmotionCheck.module.scss';
-import { useAuthStore } from '@/shared/store/useAuthStore';
 import useGetTodayQuery from '@/shared/query/mood-entries/useGetTodayQuery';
+import useAddTodayMutation from '@/shared/query/mood-entries/useAddTodayMutation';
 
 export function EmotionCheck() {
   const router = useRouter();
 
-  const { profile } = useAuthStore();
-
-  const { data: todayMoodEntry } = useGetTodayQuery();
+  const { data: todayMoodEntry } = useGetTodayQuery(); // 오늘의 기분 기록 조회
+  const { mutate: addTodayMutation } = useAddTodayMutation(); // 오늘의 기분 기록 추가
 
   /** 오늘의 마음은 어떤 느낌에 가까워요? 선택지 (긍정, 부정) */
   const [valence, setValence] = useState<ValanceType>('positive');
@@ -47,34 +46,25 @@ export function EmotionCheck() {
   };
 
   const handleSubmit = async () => {
-    try {
-      if (!profile?.id) {
-        throw new Error('로그인 정보를 가져올 수 없습니다.');
-      }
-
-      const response = await fetch('/api/mood-entries/today', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          studentId: profile.id,
+    if (todayMoodEntry?.data) {
+      /* Todo. 오늘의 기분 기록이 있으면 수정 */
+    } else {
+      /* 오늘의 기분 기록이 없으면 추가 */
+      addTodayMutation(
+        {
           emotions: selectedEmotions.join(','),
           energyLevel: energyLevel,
           thoughts: thoughts,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('기분 기록 추가에 실패했습니다.');
-      }
-
-      const data = await response.json();
-      if (!data.success) {
-        throw new Error(data.message);
-      }
-
-      router.push('/chat');
-    } catch (e) {
-      console.error(e);
+        },
+        {
+          onSuccess: () => {
+            router.push('/chat');
+          },
+          onError: (e) => {
+            console.error(e);
+          },
+        }
+      );
     }
   };
 
