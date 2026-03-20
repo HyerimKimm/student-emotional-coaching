@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import apiClient from '@/shared/api/config/apiClient';
 import { useAuthStore } from '@/shared/store/useAuthStore';
 import { useToast } from '@/shared/ui/toast';
 
@@ -14,7 +14,7 @@ const useUpdateTodayMutation = () => {
     mutationFn: async (variables: { emotions: string; energyLevel: string; thoughts: string }) => {
       const accessToken = session?.access_token;
 
-      const response = await axios.put(
+      const response = await apiClient.put(
         `/api/mood-entries/today`,
         {
           studentId: profile?.id,

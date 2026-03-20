@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import apiClient from '@/shared/api/config/apiClient';
 
 const useLogin = () => {
   return useMutation({
     mutationFn: async (variables: { email: string; password: string }) => {
-      const response = await axios.post('/api/auth/login', variables);
+      const response = await apiClient.post('/api/auth/login', variables);
       return response.data;
     },
   });
