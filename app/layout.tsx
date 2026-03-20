@@ -12,6 +12,7 @@ import Providers from './providers';
 
 import styles from './layout.module.scss';
 import { Toast } from '@/shared/ui/toast';
+import LoadingOveray from '@/widget/loading_overay/LoadingOveray';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -67,6 +68,7 @@ export default function RootLayout({
           >
             <Providers>
               <LoginFromQuery>
+                <LoadingOveray />
                 <Navigation />
                 {children}
               </LoginFromQuery>
