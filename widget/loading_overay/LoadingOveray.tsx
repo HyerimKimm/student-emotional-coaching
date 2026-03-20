@@ -1,7 +1,8 @@
 'use client';
 
-import styles from './LoadingOveray.module.scss';
 import LoadingIcon from '@/shared/asset/icons/LoadingIcon';
+
+import styles from './LoadingOveray.module.scss';
 
 export default function LoadingOveray() {
   return (
