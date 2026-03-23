@@ -5,6 +5,7 @@ import { Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import styles from './HomeDashboard.module.scss';
+import useGetRecentQuery from '@/shared/query/mood-entries/useGetRecentQuery';
 
 const moodHistory = [
   { day: '월', mood: 'tired' },
@@ -19,8 +20,11 @@ const moodHistory = [
 export function HomeDashboard() {
   const router = useRouter();
 
-  const user = useAuthStore((state) => state.user);
   const profile = useAuthStore((state) => state.profile);
+
+  const { data: recentMoodEntries, isLoading: isLoadingRecentMoodEntries } = useGetRecentQuery();
+
+  console.log(recentMoodEntries);
 
   return (
     <div className={styles.home_wrap}>
