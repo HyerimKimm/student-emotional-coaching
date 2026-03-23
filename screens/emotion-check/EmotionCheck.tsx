@@ -19,9 +19,12 @@ import useGetTodayQuery, {
 } from '@/shared/query/mood-entries/useGetTodayQuery';
 import useAddTodayMutation from '@/shared/query/mood-entries/useAddTodayMutation';
 import useUpdateTodayMutation from '@/shared/query/mood-entries/useUpdateTodayMutation';
+import { useToast } from '@/shared/ui/toast';
 
 export function EmotionCheck() {
   const router = useRouter();
+
+  const showToast = useToast();
 
   const { data: todayMoodEntry, isLoading: isLoadingTodayMoodEntry } = useGetTodayQuery(); // 오늘의 기분 기록 조회
   const { mutate: addTodayMutation } = useAddTodayMutation(); // 오늘의 기분 기록 추가
@@ -51,16 +54,18 @@ export function EmotionCheck() {
 
   const handleSubmit = async () => {
     if (!selectedEmotions.length) {
-      /* Todo. 기분을 선택하지 않았다는 메시지 표시 */
+      /* 기분을 선택하지 않았다는 메시지 표시 */
+      showToast('error', '오늘 마음을 선택해 주세요.');
       return;
     }
     if (!energyLevel) {
-      /* Todo. 에너지 수준을 선택하지 않았다는 메시지 표시 */
+      /* 에너지 수준을 선택하지 않았다는 메시지 표시 */
+      showToast('error', '에너지 수준을 선택해 주세요.');
       return;
     }
 
     if (todayMoodEntry?.data) {
-      /* Todo. 오늘의 기분 기록이 있으면 수정 */
+      /* 오늘의 기분 기록이 있으면 수정 */
       updateTodayMutation(
         {
           emotions: selectedEmotions.join(','),
@@ -102,6 +107,7 @@ export function EmotionCheck() {
     if (isLoadingTodayMoodEntry) return;
     if (!todayMoodEntry?.data) return;
 
+    /* 등록된 기분 기록이 있으면 기분 기록 불러옴 */
     queueMicrotask(() => {
       setSelectedEmotions(todayMoodEntry.data?.emotion_key.split(',') as EmotionType[]);
       setEnergyLevel(todayMoodEntry.data?.energy_level as EnergyLevelType);
