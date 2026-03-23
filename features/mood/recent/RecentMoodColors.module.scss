@@ -1,0 +1,58 @@
+@use 'sass:color';
+@use '@/shared/style/_mixins' as *;
+@use '@/shared/style/_variables' as *;
+
+.mood_history_list {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding: 0.25rem 0;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.mood_history_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 3.5rem;
+}
+
+.mood_history_circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.circle_tired {
+  background: $mood-tired;
+}
+.circle_frustrated {
+  background: $mood-frustrated;
+}
+.circle_anxious {
+  background: $mood-anxious;
+}
+.circle_irritated {
+  background: $mood-irritated;
+}
+.circle_lonely {
+  background: $mood-lonely;
+}
+.circle_excited {
+  background: $mood-excited;
+}
+.circle_okay {
+  background: $mood-okay;
+}
+
+.mood_history_day {
+  font-size: 0.75rem;
+  color: $color-gray-500;
+}

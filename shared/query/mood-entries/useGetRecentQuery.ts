@@ -8,7 +8,19 @@ import { MoodEntryType } from '@/shared/type/mood_entries';
 const useGetRecentQuery = () => {
   const profile = useAuthStore((state) => state.profile);
 
-  return useQuery({
+  const fallback: ApiResponseType<MoodEntryType[] | null> = {
+    success: true,
+    code: 200,
+    message: '기분 기록 조회 성공',
+    data: [],
+  };
+
+  const {
+    data = fallback,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     enabled: !!profile?.id,
     queryKey: QUERY_KEYS.MOOD_ENTRIES.RECENT(profile?.id ?? ''),
     queryFn: async (): Promise<ApiResponseType<MoodEntryType[] | null>> => {
@@ -16,6 +28,13 @@ const useGetRecentQuery = () => {
       return response.data;
     },
   });
+
+  return {
+    data,
+    isLoading,
+    isError,
+    error,
+  };
 };
 
 export default useGetRecentQuery;

@@ -1,21 +1,17 @@
 'use client';
 
-import { useAuthStore } from '@/shared/store/useAuthStore';
+import dayjs from 'dayjs';
+import { useMemo } from 'react';
+import 'dayjs/locale/ko';
 import { Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-import styles from './HomeDashboard.module.scss';
-import useGetRecentQuery from '@/shared/query/mood-entries/useGetRecentQuery';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 
-const moodHistory = [
-  { day: '월', mood: 'tired' },
-  { day: '화', mood: 'frustrated' },
-  { day: '수', mood: 'anxious' },
-  { day: '목', mood: 'okay' },
-  { day: '금', mood: 'excited' },
-  { day: '토', mood: 'lonely' },
-  { day: '일', mood: 'okay' },
-];
+import useGetRecentQuery from '@/shared/query/mood-entries/useGetRecentQuery';
+import { RecentMoodColors } from '@/features/mood/recent/RecentMoodColors';
+
+import styles from './HomeDashboard.module.scss';
 
 export function HomeDashboard() {
   const router = useRouter();
@@ -23,6 +19,15 @@ export function HomeDashboard() {
   const profile = useAuthStore((state) => state.profile);
 
   const { data: recentMoodEntries, isLoading: isLoadingRecentMoodEntries } = useGetRecentQuery();
+
+  const moodHistory = useMemo(() => {
+    if (!recentMoodEntries?.success || !recentMoodEntries?.data) return [];
+
+    return recentMoodEntries?.data?.map((item) => ({
+      day: dayjs(item.check_date).locale('ko').format('ddd'),
+      mood: item.emotion_key,
+    }));
+  }, [recentMoodEntries]);
 
   return (
     <div className={styles.home_wrap}>
@@ -46,14 +51,7 @@ export function HomeDashboard() {
       <section className={styles.section}>
         <h2 className={styles.section_title}>최근 감정 기록</h2>
         <div className={styles.mood_history}>
-          <div className={styles.mood_history_list}>
-            {moodHistory.map((item, index) => (
-              <div key={index} className={styles.mood_history_item}>
-                <div className={`${styles.mood_history_circle} ${styles[`circle_${item.mood}`]}`} />
-                <span className={styles.mood_history_day}>{item.day}</span>
-              </div>
-            ))}
-          </div>
+          <RecentMoodColors moodHistory={moodHistory} />
         </div>
       </section>
 
