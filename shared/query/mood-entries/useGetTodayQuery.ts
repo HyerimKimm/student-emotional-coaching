@@ -20,7 +20,8 @@ const useGetTodayQuery = () => {
   const profile = useAuthStore((state) => state.profile);
 
   return useQuery({
-    queryKey: QUERY_KEYS.MOOD_ENTRIES.TODAY(),
+    enabled: !!profile?.id,
+    queryKey: QUERY_KEYS.MOOD_ENTRIES.TODAY(profile?.id ?? ''),
     queryFn: async (): Promise<ApiResponseType<MoodEntryType | null>> => {
       const response = await apiClient.get(`/api/mood-entries/today?studentId=${profile?.id}`);
       return response.data;

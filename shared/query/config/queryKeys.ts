@@ -1,7 +1,7 @@
 const QUERY_KEYS = {
   MOOD_ENTRIES: {
-    TODAY: () => ['mood-entries', 'today'],
-    RECENT: () => ['mood-entries', 'recent'],
+    TODAY: (userId: string) => ['mood-entries', 'today', { userId }],
+    RECENT: (userId: string) => ['mood-entries', 'recent', { userId }],
   },
 };
 

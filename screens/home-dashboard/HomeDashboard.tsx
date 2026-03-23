@@ -24,8 +24,6 @@ export function HomeDashboard() {
 
   const { data: recentMoodEntries, isLoading: isLoadingRecentMoodEntries } = useGetRecentQuery();
 
-  console.log(recentMoodEntries);
-
   return (
     <div className={styles.home_wrap}>
       <header className={styles.header}>
