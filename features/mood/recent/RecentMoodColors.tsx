@@ -25,6 +25,10 @@ const getDisplayDay = (dateText: string) => {
 };
 
 export function RecentMoodColors({ moodHistory }: RecentMoodColorsProps) {
+  if (moodHistory.length === 0) {
+    return <p className={styles.empty_text}>7일간 감정 기록이 없습니다</p>;
+  }
+
   return (
     <div className={styles.mood_history_list}>
       {moodHistory.map((item, index) => {

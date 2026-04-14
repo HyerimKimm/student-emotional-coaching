@@ -9,7 +9,11 @@ import styles from './AIChat.module.scss';
 export function AIChat() {
   const [messages, setMessages] = useState<GPTMessageType[]>([]);
   const [inputValue, setInputValue] = useState('');
-  const { data: todayMoodEntry, isLoading: isLoadingTodayMoodEntry } = useGetTodayQuery();
+  const {
+    data: todayMoodEntry,
+    isLoading: isLoadingTodayMoodEntry,
+    isFetching: isFetchingTodayMoodEntry,
+  } = useGetTodayQuery();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const hasInitializedRef = useRef(false);
 
@@ -73,7 +77,9 @@ export function AIChat() {
   };
 
   useEffect(() => {
-    if (isLoadingTodayMoodEntry || hasInitializedRef.current) return;
+    // 캐시된 이전 값(null 등)으로 너무 일찍 시작하지 않도록,
+    // 오늘 데이터 재조회가 끝난 뒤에만 초기 AI 멘트를 생성한다.
+    if (isLoadingTodayMoodEntry || isFetchingTodayMoodEntry || hasInitializedRef.current) return;
     hasInitializedRef.current = true;
 
     const moodData = todayMoodEntry?.data;
@@ -95,7 +101,7 @@ export function AIChat() {
         messageList: [],
       });
     });
-  }, [isLoadingTodayMoodEntry, todayMoodEntry?.data]);
+  }, [isLoadingTodayMoodEntry, isFetchingTodayMoodEntry, todayMoodEntry?.data]);
 
   return (
     <div className={styles.chat}>

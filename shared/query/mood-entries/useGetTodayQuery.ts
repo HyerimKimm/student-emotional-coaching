@@ -6,13 +6,17 @@ import { MoodEntryType } from '@/shared/type/mood_entries';
 import { ApiResponseType } from '@/shared/type/api';
 
 /** 오늘의 기분(today) 쿼리 무효화 — mutation 등에서 사용 */
-export const invalidateTodayMoodEntry = (queryClient: QueryClient) =>
-  queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MOOD_ENTRIES.TODAY() });
+export const invalidateTodayMoodEntry = (queryClient: QueryClient, userId?: string) =>
+  queryClient.invalidateQueries({
+    queryKey: userId ? QUERY_KEYS.MOOD_ENTRIES.TODAY(userId) : ['mood-entries', 'today'],
+  });
 
 /** useMutation onSettled/onSuccess 등에서 쓰는 훅 */
 export const useInvalidateTodayMoodEntry = () => {
   const queryClient = useQueryClient();
-  return () => invalidateTodayMoodEntry(queryClient);
+  const profile = useAuthStore((state) => state.profile);
+
+  return () => invalidateTodayMoodEntry(queryClient, profile?.id);
 };
 
 /** 오늘의 기분 기록 조회 */
