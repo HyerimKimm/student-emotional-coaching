@@ -1,8 +1,6 @@
 'use client';
 
-import dayjs from 'dayjs';
 import { useMemo } from 'react';
-import 'dayjs/locale/ko';
 import { Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -24,7 +22,7 @@ export function HomeDashboard() {
     if (!recentMoodEntries?.success || !recentMoodEntries?.data) return [];
 
     return recentMoodEntries?.data?.map((item) => ({
-      day: dayjs(item.check_date).locale('ko').format('ddd'),
+      day: item.check_date,
       mood: item.emotion_key,
     }));
   }, [recentMoodEntries]);

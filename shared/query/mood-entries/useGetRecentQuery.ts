@@ -25,6 +25,7 @@ const useGetRecentQuery = () => {
     queryKey: QUERY_KEYS.MOOD_ENTRIES.RECENT(profile?.id ?? ''),
     queryFn: async (): Promise<ApiResponseType<MoodEntryType[] | null>> => {
       const response = await apiClient.get(`/api/mood-entries/recent?studentId=${profile?.id}`);
+
       return response.data;
     },
   });
