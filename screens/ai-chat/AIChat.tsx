@@ -1,30 +1,30 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Send } from 'lucide-react';
 import { GPTMessageType } from '@/shared/lib/openai';
+import useGetTodayQuery from '@/shared/query/mood-entries/useGetTodayQuery';
 import styles from './AIChat.module.scss';
 
 export function AIChat() {
   const [messages, setMessages] = useState<GPTMessageType[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const { data: todayMoodEntry, isLoading: isLoadingTodayMoodEntry } = useGetTodayQuery();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const hasInitializedRef = useRef(false);
 
-  const handleSend = async () => {
-    if (!inputValue.trim()) return;
-
-    const newMessage: GPTMessageType = {
-      role: 'user',
-      content: inputValue,
-    };
-    setMessages([...messages, newMessage]);
-    setInputValue('');
-
+  const streamAssistantMessage = async ({
+    message,
+    messageList,
+  }: {
+    message: string;
+    messageList: GPTMessageType[];
+  }) => {
     const res = await fetch('/api/chat', {
       method: 'POST',
       body: JSON.stringify({
-        message: inputValue,
-        messageList: messages,
+        message,
+        messageList,
       }),
     });
 
@@ -33,7 +33,7 @@ export function AIChat() {
 
     if (!reader) return;
 
-    setMessages([...messages, newMessage, { role: 'assistant', content: '' }]);
+    setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
 
     while (true) {
       const { done, value } = await reader.read();
@@ -47,12 +47,55 @@ export function AIChat() {
     }
   };
 
+  const handleSend = async () => {
+    if (!inputValue.trim()) return;
+
+    const trimmedInput = inputValue.trim();
+    const newMessage: GPTMessageType = {
+      role: 'user',
+      content: trimmedInput,
+    };
+
+    setMessages((prev) => [...prev, newMessage]);
+    setInputValue('');
+
+    await streamAssistantMessage({
+      message: trimmedInput,
+      messageList: messages,
+    });
+  };
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
   };
+
+  useEffect(() => {
+    if (isLoadingTodayMoodEntry || hasInitializedRef.current) return;
+    hasInitializedRef.current = true;
+
+    const moodData = todayMoodEntry?.data;
+
+    const initialMessage = moodData
+      ? [
+          '사용자가 오늘 마음체크를 완료했습니다.',
+          `체크 날짜: ${moodData.check_date}`,
+          `감정: ${moodData.emotion_key}`,
+          `에너지 수준: ${moodData.energy_level}`,
+          `메모: ${moodData.note || '(없음)'}`,
+          '위 데이터를 바탕으로 먼저 짧은 인사와 간단한 질문(1~2개)으로 대화를 시작해 주세요.',
+        ].join('\n')
+      : '사용자가 아직 오늘 마음체크를 하지 않았습니다. 먼저 부담 없는 짧은 인사로 대화를 시작해 주세요.';
+
+    queueMicrotask(() => {
+      void streamAssistantMessage({
+        message: initialMessage,
+        messageList: [],
+      });
+    });
+  }, [isLoadingTodayMoodEntry, todayMoodEntry?.data]);
 
   return (
     <div className={styles.chat}>
