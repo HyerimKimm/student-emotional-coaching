@@ -27,15 +27,19 @@ $color-backdrop-white: rgba(255, 255, 255, 0.5);
 $defaultBoxShadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
 
 // Mood colors (감정 원)
-$mood-tired: #94a3b8;
-$mood-frustrated: #f97316;
-$mood-anxious: #eab308;
-$mood-irritated: #ef4444;
-$mood-lonely: #8b5cf6;
-$mood-excited: #10b981;
-$mood-okay: #3b82f6;
-$mood-unsure: #6b7280;
-$mood-proud: #10b981;
+$mood-tired: #6B7280;
+$mood-frustrated: #F59E0B;
+$mood-anxious: #8B5CF6;
+$mood-irritated: #EF4444;
+$mood-lonely: #3B82F6;
+$mood-sad: #60A5FA;
+$mood-angry: #DC2626;
+$mood-happy: #FDE047;
+$mood-excited: #FBBF24;
+$mood-calm: #34D399;
+$mood-satisfied: #22C55E;
+$mood-proud: #10B981;
+$mood-unknown: #9CA3AF;
 
 $default-font-family: 'Noto Sans KR', sans-serif;
 

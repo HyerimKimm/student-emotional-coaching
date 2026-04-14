@@ -45,15 +45,29 @@
 .circle_lonely {
   background: $mood-lonely;
 }
+.circle_sad {
+  background: $mood-sad;
+}
+.circle_angry {
+  background: $mood-angry;
+}
+.circle_happy {
+  background: $mood-happy;
+}
 .circle_excited {
   background: $mood-excited;
 }
-.circle_okay {
-  background: $mood-okay;
+.circle_calm {
+  background: $mood-calm;
 }
-
+.circle_satisfied {
+  background: $mood-satisfied;
+}
 .circle_proud {
   background: $mood-proud;
+}
+.circle_unknown {
+  background: $mood-unknown;
 }
 
 .mood_history_day {
