@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Send } from 'lucide-react';
 import { GPTMessageType } from '@/shared/lib/openai';
 import styles from './AIChat.module.scss';
