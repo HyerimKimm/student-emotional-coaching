@@ -30,7 +30,7 @@ export function EmotionCheck() {
   const { mutate: addTodayMutation } = useAddTodayMutation(); // 오늘의 기분 기록 추가
   const { mutate: updateTodayMutation } = useUpdateTodayMutation(); // 오늘의 기분 기록 수정
 
-  const invalidateToday = useInvalidateTodayMoodEntry(); // 오늘의 기분 기록 조회 무효화
+  const invalidateToday = useInvalidateTodayMoodEntry(); // 오늘 기분·최근 기록·AI 추천 캐시 무효화
 
   /** 오늘의 마음은 어떤 느낌에 가까워요? 선택지 (긍정, 부정) */
   const [valence, setValence] = useState<ValanceType>('positive');
